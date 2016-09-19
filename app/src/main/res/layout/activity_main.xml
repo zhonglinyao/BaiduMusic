@@ -3,14 +3,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".main.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:background="#10AFFF">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tb_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@null">
+
+        </android.support.design.widget.TabLayout>
+
+        <ImageButton
+            android:id="@+id/ib_setting_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/bt_titlebar_setting_normal" />
+
+        <ImageButton
+            android:id="@+id/ib_login_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:layout_toLeftOf="@id/ib_setting_main"
+            android:background="@mipmap/img_titlebar_login" />
+
+        <ImageButton
+            android:id="@+id/ib_search_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:layout_toLeftOf="@id/ib_login_main"
+            android:background="@mipmap/bt_titlebar_new_search_normal" />
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_top">
+
+    </android.support.v4.view.ViewPager>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/img_main"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@mipmap/default_skin_thumbnail"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_main"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_songName_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="zaaaa" />
+            <TextView
+                android:id="@+id/tv_name_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="aaaaaa"
+                android:textSize="10sp"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ib_next_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/bt_minibar_next_normal"/>
+        <ImageButton
+            android:id="@+id/ib_play_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/ib_next_main"
+            android:background="@mipmap/bt_minibar_play_normal"/>
+        <ImageButton
+            android:id="@+id/ib_song_list_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/ib_play_main"
+            android:background="@mipmap/bt_minibar_playinglist_normal"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>

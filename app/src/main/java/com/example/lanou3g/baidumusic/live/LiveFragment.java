@@ -1,7 +1,7 @@
 package com.example.lanou3g.baidumusic.live;
 
-import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.R;
+import com.example.lanou3g.baidumusic.main.BaseFragment;
 
 /**
  * Created by dllo on 16/9/19.
@@ -9,7 +9,7 @@ import com.example.lanou3g.baidumusic.R;
 public class LiveFragment extends BaseFragment {
     @Override
     protected int setLayout() {
-        return R.layout.fragemnt_live;
+        return R.layout.fragment_live;
     }
 
     @Override

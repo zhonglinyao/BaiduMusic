@@ -1,5 +1,6 @@
 package com.example.lanou3g.baidumusic.musiclibrary;
 
+import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 
 /**
@@ -8,7 +9,7 @@ import com.example.lanou3g.baidumusic.main.BaseFragment;
 public class BroadCastingFragment extends BaseFragment{
     @Override
     protected int setLayout() {
-        return 0;
+        return R.layout.fragment_broadcasting;
     }
 
     @Override
