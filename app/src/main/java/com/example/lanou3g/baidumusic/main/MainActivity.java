@@ -48,5 +48,6 @@ public class MainActivity extends BaseActivity {
         tb.setupWithViewPager(vp);
         tb.setSelectedTabIndicatorHeight(0);
         tb.setTabTextColors(Color.argb(140, 255, 255, 255), Color.WHITE);
+        vp.setCurrentItem(1);
     }
 }

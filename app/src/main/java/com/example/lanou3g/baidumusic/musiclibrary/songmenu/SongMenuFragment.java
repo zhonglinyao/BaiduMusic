@@ -1,4 +1,4 @@
-package com.example.lanou3g.baidumusic.musiclibrary;
+package com.example.lanou3g.baidumusic.musiclibrary.songmenu;
 
 import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
@@ -6,10 +6,10 @@ import com.example.lanou3g.baidumusic.main.BaseFragment;
 /**
  * Created by dllo on 16/9/19.
  */
-public class MVFragment extends BaseFragment{
+public class SongMenuFragment extends BaseFragment{
     @Override
     protected int setLayout() {
-        return R.layout.fragment_mv;
+        return R.layout.fragment_songmenu;
     }
 
     @Override

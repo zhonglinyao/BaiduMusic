@@ -7,6 +7,11 @@ import android.support.v4.view.ViewPager;
 
 import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.broadcast.BroadCastingFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.mv.MVFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.ranking.RankingFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.recommend.RecommendFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.songmenu.SongMenuFragment;
 
 import java.util.ArrayList;
 
