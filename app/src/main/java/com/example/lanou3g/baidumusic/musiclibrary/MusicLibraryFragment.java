@@ -9,7 +9,7 @@ import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.broadcast.BroadCastingFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.mv.MVFragment;
-import com.example.lanou3g.baidumusic.musiclibrary.ranking.RankingFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.musictop.MusicTopFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.recommend.RecommendFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.songmenu.SongMenuFragment;
 
@@ -44,7 +44,7 @@ public class MusicLibraryFragment extends BaseFragment{
         strings.add("MV");
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new RecommendFragment());
-        fragments.add(new RankingFragment());
+        fragments.add(new MusicTopFragment());
         fragments.add(new SongMenuFragment());
         fragments.add(new BroadCastingFragment());
         fragments.add(new MVFragment());

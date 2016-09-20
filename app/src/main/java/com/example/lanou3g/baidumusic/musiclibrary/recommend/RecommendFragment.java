@@ -66,8 +66,6 @@ public class RecommendFragment extends BaseFragment {
                         imageViews.get(i).setBackgroundResource(R.mipmap.ic_dot_default_unselected);
                     }
                 }
-
-
             }
 
             @Override
@@ -104,6 +102,7 @@ public class RecommendFragment extends BaseFragment {
                             imageViews.add(imageView);
                             ll.addView(imageViews.get(i));
                         }
+
                         for (int i = 0; i < list.size(); i++) {
                             SimpleDraweeView view = new SimpleDraweeView(context);
                             Uri uri = Uri.parse(list.get(i).getRandpic());
@@ -125,7 +124,15 @@ public class RecommendFragment extends BaseFragment {
         VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
     }
 
-    private class ImageHander extends Handler {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ll.removeAllViews();
+        imageViews.clear();
+    }
+
+
+    private static class ImageHander extends Handler {
         protected static final int MSG_UPDATE = 1;
         protected static final int MSG_KEEP = 2;
         protected static final int MSG_BREAK = 3;

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/img_listview_music_top"
+        android:layout_width="90dp"
+        android:layout_height="90dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/img_listview_music_top"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_listview_name_music_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新歌榜"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_first_listview_music_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxEms="15"
+            android:maxLines="1"
+            android:text="来日方长" />
+
+        <TextView
+            android:id="@+id/tv_second_listview_music_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="15"
+            android:maxLines="1"
+            android:text="来日方长" />
+
+        <TextView
+            android:id="@+id/tv_third_listview_music_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="15"
+            android:maxLines="1"
+            android:text="来日方长" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_listView_music_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:background="@mipmap/ic_songlist_detail_nor" />
+
+</RelativeLayout>
