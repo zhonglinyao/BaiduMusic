@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.lanou3g.baidumusic.MyCricleImage;
 import com.example.lanou3g.baidumusic.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,6 +19,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by dllo on 16/9/22.
@@ -31,7 +32,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     private ArrayList<RecommendBean.ModuleBean> moduleBeen = new ArrayList<>();
     private final int[] layout;
     private final DisplayImageOptions options;
-    private ImageHander hander = new ImageHander(new WeakReference<RecommendAdapter>(this));
+    private ImageHander hander;
     private static ViewPager vp;
 
     public void setModuleBeen(ArrayList<RecommendBean.ModuleBean> moduleBeen) {
@@ -46,6 +47,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
 
     public RecommendAdapter(Context context) {
         this.context = context;
+        hander = new ImageHander(new WeakReference<RecommendAdapter>(this));
         layout = new int[]{
                 R.layout.item1_carouse_image, R.layout.item2_recycleview_recommend,
                 R.layout.item_siximg_recycleview_recommend, R.layout.item_siximg_recycleview_recommend,
@@ -449,7 +451,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
         private final TextView tv_head_title;
         private final TextView tv_head_more;
         private final ImageView img_head;
-        private final MyCricleImage[] cricleImages;
+        private final CircleImageView[] cricleImages;
         private final TextView[] titleTextViews;
         private final TextView[] authorTextViews;
 
@@ -460,18 +462,18 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             tv_head_more = bindView(R.id.tv_head_more_recommend, viewHead);
             img_head = bindView(R.id.img_head_recommend, viewHead);
             View viewOne = bindView(R.id.ic_nowsong_one_recommend, itemView);
-            MyCricleImage cricleImageOne = bindView(R.id.cricle_image_recsong_layout, viewOne);
+            CircleImageView cricleImageOne = bindView(R.id.cricle_image_recsong_layout, viewOne);
             TextView tv_title_one = bindView(R.id.tv_recsong_title, viewOne);
             TextView tv_author_one = bindView(R.id.tv_recsong_author, viewOne);
             View viewTwo = bindView(R.id.ic_nowsong_two_recommend, itemView);
-            MyCricleImage cricleImageTwo = bindView(R.id.cricle_image_recsong_layout, viewTwo);
+            CircleImageView cricleImageTwo = bindView(R.id.cricle_image_recsong_layout, viewTwo);
             TextView tv_title_two = bindView(R.id.tv_recsong_title, viewTwo);
             TextView tv_author_two = bindView(R.id.tv_recsong_author, viewTwo);
             View viewThree = bindView(R.id.ic_nowsong_three_recommend, itemView);
-            MyCricleImage cricleImageThree = bindView(R.id.cricle_image_recsong_layout, viewThree);
+            CircleImageView cricleImageThree = bindView(R.id.cricle_image_recsong_layout, viewThree);
             TextView tv_title_three = bindView(R.id.tv_recsong_title, viewThree);
             TextView tv_author_three = bindView(R.id.tv_recsong_author, viewThree);
-            cricleImages = new MyCricleImage[]{cricleImageOne, cricleImageTwo, cricleImageThree};
+            cricleImages = new CircleImageView[]{cricleImageOne, cricleImageTwo, cricleImageThree};
             titleTextViews = new TextView[]{tv_title_one, tv_title_two, tv_title_three};
             authorTextViews = new TextView[]{tv_author_one, tv_author_two, tv_author_three};
         }

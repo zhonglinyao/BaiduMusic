@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="2dp">
+    android:padding="3dp">
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -12,8 +12,9 @@
 
             <ImageView
                 android:id="@+id/img_recycleview_songmenu"
-                android:layout_width="171dp"
-                android:layout_height="171dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"/>
 
             <ImageButton
                 android:id="@+id/ib_recycleview_songmenu"
@@ -22,7 +23,20 @@
                 android:layout_gravity="bottom|right"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:scaleType="fitCenter"
                 android:background="@drawable/play_song_menu_select" />
+            <TextView
+                android:id="@+id/tv_listener_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_listen_count"
+                android:drawablePadding="5dp"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp" />
         </FrameLayout>
 
         <TextView

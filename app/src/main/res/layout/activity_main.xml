@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_alignParentLeft="true"
-            android:background="@mipmap/bt_localsonglist_move_nor"/>
+            android:background="@mipmap/bt_localsonglist_move_press"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tb_main"

@@ -1,9 +1,11 @@
 package com.example.lanou3g.baidumusic.musiclibrary.musictop;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -81,6 +83,14 @@ public class MusicTopAdapter extends BaseAdapter{
             tv_second = (TextView) convertView.findViewById(R.id.tv_second_listview_music_top);
             tv_third = (TextView) convertView.findViewById(R.id.tv_third_listview_music_top);
             imageButton = (ImageButton) convertView.findViewById(R.id.btn_listView_music_top);
+            ViewGroup.LayoutParams params = imageView.getLayoutParams();
+            WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics metrics = new DisplayMetrics();
+            manager.getDefaultDisplay().getMetrics(metrics);
+            int width = metrics.widthPixels;
+            params.width = width / 5;
+            params.height = width / 5;
+            imageView.setLayoutParams(params);
         }
     }
 }
