@@ -38,14 +38,14 @@ public class MusicLibraryFragment extends BaseFragment{
     protected void initData() {
         ArrayList<String> strings = new ArrayList<>();
         strings.add("推荐");
-        strings.add("排行");
         strings.add("歌单");
-        strings.add("电台");
-        strings.add("MV");
+        strings.add("榜单");
+        strings.add("视频");
+        strings.add("K歌");
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new RecommendFragment());
-        fragments.add(new MusicTopFragment());
         fragments.add(new SongMenuFragment());
+        fragments.add(new MusicTopFragment());
         fragments.add(new BroadCastingFragment());
         fragments.add(new MVFragment());
         MusicLibraryAdapter adapter = new MusicLibraryAdapter(getChildFragmentManager());

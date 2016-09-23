@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:id="@+id/img_recycleview_songmenu"
+                android:layout_width="171dp"
+                android:layout_height="171dp" />
+
+            <ImageButton
+                android:id="@+id/ib_recycleview_songmenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/play_song_menu_select" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_title_reclcleview_songmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="10sp" />
+        <TextView
+            android:id="@+id/tv_type_recycleview_songmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp" />
+</LinearLayout>

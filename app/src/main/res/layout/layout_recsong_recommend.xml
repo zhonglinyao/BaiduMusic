@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+
+    <com.example.lanou3g.baidumusic.MyCricleImage
+        android:id="@+id/cricle_image_recsong_layout"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:is_circle="true"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/cricle_image_recsong_layout"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:id="@+id/tv_recsong_title"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:id="@+id/tv_recsong_author"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ib_recsong_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@mipmap/ic_songlist_detail_nor"/>
+</RelativeLayout>

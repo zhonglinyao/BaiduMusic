@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/ic_siximg_head_recommend"
+        layout="@layout/item_head_view_recommend" />
+
+    <include
+        android:id="@+id/ic_first_siximg_recommend"
+        layout="@layout/three_image_recommend" />
+
+    <include
+        android:id="@+id/ic_second_siximg_recommend"
+        layout="@layout/three_image_recommend" />
+</LinearLayout>

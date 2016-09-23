@@ -26,6 +26,7 @@ public class MusicTopFragment extends BaseFragment{
     @Override
     protected void initView() {
         lv = bindView(R.id.lv_music_top);
+        lv.setVerticalScrollBarEnabled(false);
     }
 
     @Override

@@ -9,7 +9,7 @@ import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.live.LiveFragment;
 import com.example.lanou3g.baidumusic.mine.MineFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.MusicLibraryFragment;
-import com.example.lanou3g.baidumusic.singsong.SingSongFragment;
+import com.example.lanou3g.baidumusic.dynamic.DynamicFragment;
 
 import java.util.ArrayList;
 
@@ -33,13 +33,13 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         ArrayList<String> strings = new ArrayList<>();
         strings.add("我的");
-        strings.add("乐库");
-        strings.add("K歌");
+        strings.add("音乐");
+        strings.add("动态");
         strings.add("直播");
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new MineFragment());
         fragments.add(new MusicLibraryFragment());
-        fragments.add(new SingSongFragment());
+        fragments.add(new DynamicFragment());
         fragments.add(new LiveFragment());
         MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
         mainAdapter.setStrings(strings);

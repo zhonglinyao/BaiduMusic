@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/ic_breadcasting_recommend"
+        layout="@layout/item_head_view_recommend" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_one_breadcasting_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@mipmap/ic_classify_img02" />
+
+            <TextView
+                android:id="@+id/tv_one_breadcasting_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.5"
+                android:textSize="10sp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_two_breadcasting_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@mipmap/ic_classify_img01" />
+
+            <TextView
+                android:id="@+id/tv_two_breadcasting_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.5"
+                android:textSize="10sp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_three_breadcasting_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@mipmap/ic_classify_img03" />
+
+            <TextView
+                android:id="@+id/tv_three_breadcasting_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.5"
+                android:textSize="10sp"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_four_breadcasting_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@mipmap/ic_classify_img04" />
+
+            <TextView
+                android:id="@+id/tv_four_breadcasting_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="5dp"
+                android:alpha="0.5"
+                android:textSize="10sp"/>
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

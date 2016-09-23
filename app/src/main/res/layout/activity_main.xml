@@ -12,42 +12,31 @@
         android:layout_height="wrap_content"
         android:background="#10AFFF">
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ib_more_main"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:background="@mipmap/bt_localsonglist_move_nor"/>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tb_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:background="@null">
-
-        </android.support.design.widget.TabLayout>
-
-        <ImageButton
-            android:id="@+id/ib_setting_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="10dp"
-            android:background="@mipmap/bt_titlebar_setting_normal" />
-
-        <ImageButton
-            android:id="@+id/ib_login_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_margin="6dp"
-            android:layout_toLeftOf="@id/ib_setting_main"
-            android:background="@mipmap/img_titlebar_login" />
+            android:background="@null"
+            android:layout_centerHorizontal="true"/>
 
         <ImageButton
             android:id="@+id/ib_search_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_margin="6dp"
-            android:layout_toLeftOf="@id/ib_login_main"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
             android:background="@mipmap/bt_titlebar_new_search_normal" />
+
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager
@@ -113,7 +102,6 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/ib_play_main"
             android:background="@mipmap/bt_minibar_playinglist_normal"/>
-
     </RelativeLayout>
 
 </RelativeLayout>

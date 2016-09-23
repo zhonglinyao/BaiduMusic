@@ -56,11 +56,11 @@ public class MusicTopAdapter extends BaseAdapter{
         }
         Picasso.with(context).load(list.get(position).getPic_s192()).error(R.mipmap.default_ticker).into(viewHolder.imageView);
         viewHolder.tv_name.setText(list.get(position).getName());
-        viewHolder.tv_first.setText("1 " + list.get(position).getContent().get(0).getTitle() + "-" +
+        viewHolder.tv_first.setText(list.get(position).getContent().get(0).getTitle() + "-" +
                 list.get(position).getContent().get(0).getAuthor());
-        viewHolder.tv_second.setText("2 " + list.get(position).getContent().get(1).getTitle() + "-" +
+        viewHolder.tv_second.setText(list.get(position).getContent().get(1).getTitle() + "-" +
                 list.get(position).getContent().get(1).getAuthor());
-        viewHolder.tv_third.setText("3 " + list.get(position).getContent().get(2).getTitle() + "-" +
+        viewHolder.tv_third.setText(list.get(position).getContent().get(2).getTitle() + "-" +
                 list.get(position).getContent().get(2).getAuthor());
         return convertView;
     }
