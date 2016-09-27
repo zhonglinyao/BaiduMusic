@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.lanou3g.baidumusic.MyApp;
 import com.example.lanou3g.baidumusic.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -34,6 +35,11 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     private final DisplayImageOptions options;
     private ImageHander hander;
     private static ViewPager vp;
+    private ListenerCallBack listenerCallBack;
+
+    public void setListenerCallBack(ListenerCallBack listenerCallBack) {
+        this.listenerCallBack = listenerCallBack;
+    }
 
     public void setModuleBeen(ArrayList<RecommendBean.ModuleBean> moduleBeen) {
         this.moduleBeen = moduleBeen;
@@ -42,7 +48,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
 
     public void setLists(ArrayList<List> lists) {
         this.lists = lists;
-        notifyDataSetChanged();
     }
 
     public RecommendAdapter(Context context) {
@@ -120,55 +125,84 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (position) {
             case 0:
-                ViewHolderCarouse viewHolderCarouse = (ViewHolderCarouse) holder;
-                CarouseAdapter adapter = new CarouseAdapter(context);
-                adapter.setFocusResultBeen(lists.get(position));
-                vp.setAdapter(adapter);
-                vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (MyApp.isNetworkAvailable()){
+                    ViewHolderCarouse viewHolderCarouse = (ViewHolderCarouse) holder;
+                    CarouseAdapter adapter = new CarouseAdapter(context);
+                    adapter.setFocusResultBeen(lists.get(position));
+                    vp.setAdapter(adapter);
+                    vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                        @Override
+                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        hander.sendMessage(Message.obtain(hander, ImageHander.MSG_PAGE, position, 0));
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        switch (state) {
-                            case ViewPager.SCROLL_STATE_DRAGGING:
-                                hander.sendEmptyMessage(ImageHander.MSG_KEEP);
-                                break;
-                            case ViewPager.SCROLL_STATE_IDLE:
-                                hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
-                                break;
                         }
-                    }
-                });
 
-                hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
+                        @Override
+                        public void onPageSelected(int position) {
+                            hander.sendMessage(Message.obtain(hander, ImageHander.MSG_PAGE, position, 0));
+                        }
 
+                        @Override
+                        public void onPageScrollStateChanged(int state) {
+                            switch (state) {
+                                case ViewPager.SCROLL_STATE_DRAGGING:
+                                    hander.sendEmptyMessage(ImageHander.MSG_KEEP);
+                                    break;
+                                case ViewPager.SCROLL_STATE_IDLE:
+                                    hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
+                                    break;
+                            }
+                        }
+                    });
 
+                    hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
+                }else {
+
+                }
                 break;
             case 1:
                 ViewHolderEntry viewHolderEntry = (ViewHolderEntry) holder;
+                viewHolderEntry.ll_one.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listenerCallBack.callBack(RecommendVlaues.BTN_SORT_ONE);
+                    }
+                });
+                viewHolderEntry.ll_two.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listenerCallBack.callBack(RecommendVlaues.BTN_SORT_TWO);
+                    }
+                });
+                viewHolderEntry.ll_three.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listenerCallBack.callBack(RecommendVlaues.BTN_SORT_THREE);
+                    }
+                });
                 break;
             case 2:
-                List<RecommendBean.ResultBean.DiyBean.DiyResultBean> diyResultBeen = lists.get(position);
-                ViewHolderSixImg viewHolderSixImg = (ViewHolderSixImg) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImg.img_head, options);
-                viewHolderSixImg.tv_head_title.setText(moduleBeen.get(position).getTitle());
+                final List<RecommendBean.ResultBean.DiyBean.DiyResultBean> diyResultBeen = lists.get(position);
+                ViewHolderSixImg viewHolderSixImgDiy = (ViewHolderSixImg) holder;
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgDiy.img_head, options);
+                viewHolderSixImgDiy.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
-                    viewHolderSixImg.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
+                    viewHolderSixImgDiy.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
                 } else {
-                    viewHolderSixImg.tv_head_more.setVisibility(View.INVISIBLE);
+                    viewHolderSixImgDiy.tv_head_more.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < 6; i++) {
-                    ImageLoader.getInstance().displayImage(diyResultBeen.get(i).getPic(), viewHolderSixImg.imageViews[i], options);
-                    viewHolderSixImg.titleTextViews[i].setText(diyResultBeen.get(i).getTitle());
+                    ImageLoader.getInstance().displayImage(diyResultBeen.get(i).getPic(), viewHolderSixImgDiy.imageViews[i], options);
+                    viewHolderSixImgDiy.titleTextViews[i].setText(diyResultBeen.get(i).getTitle());
+                    final int finalI = i;
+                    viewHolderSixImgDiy.imageViews[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            listenerCallBack.hotSongMenu(diyResultBeen.get(finalI).getListid());
+                        }
+                    });
                 }
+
+
                 break;
             case 3:
                 List<RecommendBean.ResultBean.Mix1Bean.Mix1ResultBean> mix1ResultBeen = lists.get(position);

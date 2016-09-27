@@ -2,6 +2,8 @@ package com.example.lanou3g.baidumusic.musiclibrary.recommend;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -39,14 +41,43 @@ public class RecommendFragment extends BaseFragment {
     @Override
     protected void initData() {
         final RecommendAdapter adapter = new RecommendAdapter(context);
+        adapter.setListenerCallBack(new ListenerCallBack() {
+            @Override
+            public void callBack(int btnSort) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.fragment_slide_in_right, R.anim.fragment_slide_out_left);
+                switch (btnSort){
+                    case 1:
+                        transaction.replace(R.id.fl_main, new SingerSortFragment());
+                        break;
+                    case 2:
+                        transaction.replace(R.id.fl_main, new SongSortFragment());
+                        break;
+                    case 3:
+                        transaction.replace(R.id.fl_main, new BroadCastSortFragment());
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
+                }
+                transaction.commit();
+            }
+
+            @Override
+            public void hotSongMenu(String listId) {
+                String urlString = URLVlaues.getHotSongMenu(listId);
+
+            }
+        });
 
         LinearLayoutManager manager = new LinearLayoutManager(context);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setAdapter(adapter);
         rv.setLayoutManager(manager);
 
-//        final CarouseAdapter adapter = new CarouseAdapter(context);
-//        vp.setAdapter(adapter);
-        final GsonRequest<RecommendBean> request = new GsonRequest<RecommendBean>(URLVlaues.RECOMMEND,
+        final GsonRequest<RecommendBean> request = new GsonRequest<RecommendBean>(URLVlaues.NEW_RECOMMEND,
                 RecommendBean.class,
                 new Response.Listener<RecommendBean>() {
                     @Override
@@ -82,53 +113,6 @@ public class RecommendFragment extends BaseFragment {
                         moduleBeen.remove(2);
                         adapter.setLists(lists);
                         adapter.setModuleBeen(moduleBeen);
-                        rv.setAdapter(adapter);
-//                for (int i = 0; i < list.size(); i++) {
-//                    ImageView imageView = new ImageView(context);
-//                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 10);
-//                    params.setMargins(5, 0, 5, 0);
-//                    imageView.setLayoutParams(params);
-//                    if (i == 0) {
-//                        imageView.setBackgroundResource(R.mipmap.ic_dot_default_selected);
-//                    } else {
-//                        imageView.setBackgroundResource(R.mipmap.ic_dot_default_unselected);
-//                    }
-//                    imageViews.add(imageView);
-//                    ll.addView(imageViews.get(i));
-//                }
-//                adapter.setFocusResultBeen(list);
-//                vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//                    @Override
-//                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onPageSelected(int position) {
-//                        hander.sendMessage(Message.obtain(hander, ImageHander.MSG_PAGE, position, 0));
-//                        for (int i = 0; i < imageViews.size(); i++) {
-//                            if (i == position % imageViews.size()) {
-//                                imageViews.get(i).setBackgroundResource(R.mipmap.ic_dot_default_selected);
-//                            } else {
-//                                imageViews.get(i).setBackgroundResource(R.mipmap.ic_dot_default_unselected);
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onPageScrollStateChanged(int state) {
-//                        switch (state) {
-//                            case ViewPager.SCROLL_STATE_DRAGGING:
-//                                hander.sendEmptyMessage(ImageHander.MSG_KEEP);
-//                                break;
-//                            case ViewPager.SCROLL_STATE_IDLE:
-//                                hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
-//                                break;
-//                        }
-//                    }
-//                });
-//                hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
-
                     }
                 }, new Response.ErrorListener() {
             @Override

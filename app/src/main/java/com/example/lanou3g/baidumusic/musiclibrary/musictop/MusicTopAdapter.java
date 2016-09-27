@@ -88,8 +88,8 @@ public class MusicTopAdapter extends BaseAdapter{
             DisplayMetrics metrics = new DisplayMetrics();
             manager.getDefaultDisplay().getMetrics(metrics);
             int width = metrics.widthPixels;
-            params.width = width / 5;
-            params.height = width / 5;
+            params.width = (int) (width / 4);
+            params.height = (int) (width / 4);
             imageView.setLayoutParams(params);
         }
     }

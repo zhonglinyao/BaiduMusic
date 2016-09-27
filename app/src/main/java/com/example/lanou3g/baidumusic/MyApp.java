@@ -2,6 +2,8 @@ package com.example.lanou3g.baidumusic;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -21,6 +23,16 @@ public class MyApp extends Application{
     public static Context getmContext() {
         return mContext;
 
+    }
+
+    public static Boolean isNetworkAvailable(){
+        ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        if (networkInfo == null || !networkInfo.isAvailable()){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

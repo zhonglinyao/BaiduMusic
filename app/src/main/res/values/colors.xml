@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorMusicLibraryTabLayoutText">#0FBFFF</color>
+    <color name="colorMain">#10AFFF</color>
+
 </resources>
