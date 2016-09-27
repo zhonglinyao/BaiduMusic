@@ -12,7 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lanou3g.baidumusic.R;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 public class MusicTopAdapter extends BaseAdapter{
     private Context context;
     private ArrayList<MusicTopBean.TopNameBean> list = new ArrayList<>();
+    private final DisplayImageOptions options;
 
     public void setList(ArrayList<MusicTopBean.TopNameBean> list) {
         this.list = list;
@@ -29,6 +31,14 @@ public class MusicTopAdapter extends BaseAdapter{
 
     public MusicTopAdapter(Context context) {
         this.context = context;
+        options = new DisplayImageOptions
+               .Builder()
+               .showImageForEmptyUri(R.mipmap.default_detail)
+               .showImageOnLoading(R.mipmap.default_detail)
+               .cacheInMemory(true)
+               .cacheOnDisk(true)
+               .considerExifParams(true)
+               .build();
     }
 
     @Override
@@ -56,7 +66,7 @@ public class MusicTopAdapter extends BaseAdapter{
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Picasso.with(context).load(list.get(position).getPic_s192()).error(R.mipmap.default_ticker).into(viewHolder.imageView);
+        ImageLoader.getInstance().displayImage(list.get(position).getPic_s192(), viewHolder.imageView, options);
         viewHolder.tv_name.setText(list.get(position).getName());
         viewHolder.tv_first.setText(list.get(position).getContent().get(0).getTitle() + "-" +
                 list.get(position).getContent().get(0).getAuthor());

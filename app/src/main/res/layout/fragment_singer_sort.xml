@@ -58,8 +58,8 @@
         android:id="@+id/lv_singer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:background="#FFFFFF"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </ListView>

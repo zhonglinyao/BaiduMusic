@@ -5,5 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorMusicLibraryTabLayoutText">#0FBFFF</color>
     <color name="colorMain">#10AFFF</color>
+    <color name="colorHotSongMenuLayoutPressed">#9F5F5F5F</color>
+    <color name="colorHotSongMenuLayoutNor">#8F8F8F</color>
+    <color name="colorLine">#909090</color>
+
 
 </resources>

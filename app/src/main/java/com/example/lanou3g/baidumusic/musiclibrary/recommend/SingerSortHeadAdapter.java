@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lanou3g.baidumusic.R;
@@ -67,7 +68,9 @@ public class SingerSortHeadAdapter extends PagerAdapter {
         textViewOne.setGravity(Gravity.CENTER);
         textViewTwo.setGravity(Gravity.CENTER);
         textViewThree.setGravity(Gravity.CENTER);
+        LinearLayout ll = (LinearLayout) view.findViewById(R.id.ll_threeimg);
         ViewGroup.LayoutParams params = imgOne.getLayoutParams();
+        ViewGroup.LayoutParams params1 = ll.getLayoutParams();
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(metrics);
@@ -77,6 +80,7 @@ public class SingerSortHeadAdapter extends PagerAdapter {
         imgOne.setLayoutParams(params);
         imgtwo.setLayoutParams(params);
         imgthree.setLayoutParams(params);
+        params1.width = width;
         ImageLoader.getInstance().displayImage(lists.get(position).get(0).getAvatar_middle(), imgOne, options);
         ImageLoader.getInstance().displayImage(lists.get(position).get(1).getAvatar_middle(), imgtwo, options);
         ImageLoader.getInstance().displayImage(lists.get(position).get(2).getAvatar_middle(), imgthree, options);

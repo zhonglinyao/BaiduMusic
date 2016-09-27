@@ -23,8 +23,19 @@ public class URLVlaues {
     private static String HOT_SONG_MENU = "";
     private static final String HOT_SONG_MENU_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.diy.gedanInfo&from=ios&listid=";
     private static final String HOT_SONG_MENU_END = "&version=5.2.3&from=ios&channel=appstore";
+
+    private static String MV_NEW = "";
+    private static final String MV_NEW_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=1413c&operator=1&provider=11%2C12&method=baidu.ting.mv.searchMV&format=json&order=1&page_num=";
+    private static final String MV_NEW_END = "&page_size=20&query=%E5%85%A8%E9%83%A8";
+
+    public static String getMvNew(int page) {
+        MV_NEW = MV_NEW_HEAD + page + MV_NEW_END;
+        return MV_NEW;
+    }
+
     public static String getHotSongMenu(String s) {
         HOT_SONG_MENU = HOT_SONG_MENU_HEAD + s + HOT_SONG_MENU_END;
         return HOT_SONG_MENU;
     }
+
 }

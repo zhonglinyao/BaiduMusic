@@ -13,8 +13,7 @@
             <ImageView
                 android:id="@+id/img_recycleview_songmenu"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitCenter"/>
+                android:layout_height="wrap_content" />
 
             <ImageButton
                 android:id="@+id/ib_recycleview_songmenu"
@@ -43,11 +42,9 @@
             android:id="@+id/tv_title_reclcleview_songmenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="10sp" />
+            android:textColor="#000000" />
         <TextView
             android:id="@+id/tv_type_recycleview_songmenu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp" />
+            android:layout_height="wrap_content" />
 </LinearLayout>

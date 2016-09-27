@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,25 +8,26 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="#20505050">
-
+        android:layout_height="wrap_content"
+        android:background="#20505050"
+        >
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp">
 
-                <ImageButton
-                    android:id="@+id/ib_back_hot_songmenu"
+                <ImageView
+                    android:id="@+id/iv_back_hot_songmenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/ic_back_press" />
+                    android:src="@mipmap/ic_back_press" />
 
                 <TextView
                     android:id="@+id/tv_title_hot_songmenu"
@@ -46,70 +48,228 @@
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
-                <ImageButton
-                    android:id="@+id/ib_more_hot_songmenu"
+                <ImageView
+                    android:id="@+id/iv_more_hot_songmenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/ic_song_menu_more" />
+                    android:src="@mipmap/ic_song_menu_more" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
-        <ImageView
-            android:id="@+id/iv_hot_songmenu"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/default_live_ic" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="aaaaa"
-            android:textColor="@android:color/white" />
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            app:layout_scrollFlags="scroll"
+            android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circle_img_hot_songmenu"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/circle_img_hot_songmenu"
-                android:text="aaa"
-                android:textColor="@android:color/white" />
+            <ImageView
+                android:id="@+id/iv_hot_songmenu"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/default_artist" />
 
             <TextView
+                android:id="@+id/tv_tag_hot_songmenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:drawableLeft="@mipmap/ic_listen_count"
-                android:text="187"
+                android:layout_gravity="center"
+                android:text="aaaaa"
                 android:textColor="@android:color/white" />
-        </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circle_img_hot_songmenu"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/circle_img_hot_songmenu"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/tv_listennum_hot_songmenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:maxLines="1"
+                    android:text="187"
+                    android:textColor="@android:color/white" />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@mipmap/ic_listen_count"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_listennum_hot_songmenu"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_collect_hot_songmenu"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/layout_hot_songmenu_select"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/abc_btn_rating_star_off_mtrl_alpha" />
+
+                    <TextView
+                        android:id="@+id/tv_collect_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+
+                <LinearLayout
+                    android:id="@+id/ll_comment_hot_songmenu"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/layout_hot_songmenu_select"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/ic_recmd_homepage_comments" />
+
+                    <TextView
+                        android:id="@+id/tv_Comment_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+
+                <LinearLayout
+                    android:id="@+id/ll_share_hot_songmenu"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/layout_hot_songmenu_select"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@mipmap/ktv_share_icon_share_normal" />
+
+                    <TextView
+                        android:id="@+id/tv_share_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_songlist_play_hot_songmenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/ic_songlist_play"
+                    android:drawablePadding="10dp"
+                    android:text="播放全部"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tv_songlist_count_hot_songmenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/tv_songlist_play_hot_songmenu"
+                    android:layout_toRightOf="@id/tv_songlist_play_hot_songmenu" />
+
+                <TextView
+                    android:id="@+id/tv_download_hot_songmenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:drawableLeft="@mipmap/bt_skin_download"
+                    android:gravity="center"
+                    android:text="下载" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:alpha="0.1"/>
+
+            <TextView
+                android:id="@+id/tv_dec_hot_songmenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingBottom="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:alpha="0.1"/>
+        </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
-        android:id="@+id/lv_hot_songmenu"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_hot_songmenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@android:color/white">
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 </android.support.design.widget.CoordinatorLayout>

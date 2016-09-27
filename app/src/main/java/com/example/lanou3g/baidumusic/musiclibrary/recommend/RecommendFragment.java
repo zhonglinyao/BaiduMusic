@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -68,7 +69,30 @@ public class RecommendFragment extends BaseFragment {
             @Override
             public void hotSongMenu(String listId) {
                 String urlString = URLVlaues.getHotSongMenu(listId);
+                Log.d("RecommendFragment", urlString);
+                GsonRequest<HotSongMenuBean> hotSongMenuBeanGsonRequest =
+                        new GsonRequest<HotSongMenuBean>(
+                                urlString,
+                                HotSongMenuBean.class,
+                                new Response.Listener<HotSongMenuBean>() {
+                                    @Override
+                                    public void onResponse(HotSongMenuBean response) {
+                                        FragmentManager manager = getActivity().getSupportFragmentManager();
+                                        FragmentTransaction transaction = manager.beginTransaction();
+                                        transaction.setCustomAnimations(R.anim.fragment_slide_in_right, R.anim.fragment_slide_out_left);
+                                        HotSongMenuFragment hotSongMenuFragment = new HotSongMenuFragment();
+                                        hotSongMenuFragment.setHotSongMenuBean(response);
+                                        transaction.replace(R.id.fl_main, hotSongMenuFragment);
+                                        transaction.commit();
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
 
+                                    }
+                                });
+                VolleyRequestQueue.getVolleyRequestQueue().addRequest(hotSongMenuBeanGsonRequest);
             }
         });
 

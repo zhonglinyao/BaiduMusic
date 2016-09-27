@@ -1,5 +1,11 @@
 package com.example.lanou3g.baidumusic.musiclibrary.musictop;
 
+import android.content.Context;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -27,6 +33,16 @@ public class MusicTopFragment extends BaseFragment{
     protected void initView() {
         lv = bindView(R.id.lv_music_top);
         lv.setVerticalScrollBarEnabled(false);
+        View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footerview, lv, false);
+        View v = (View) footerView.findViewById(R.id.footerView);
+        ViewGroup.LayoutParams params = v.getLayoutParams();
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;
+        params.height = (int) (width / 7);
+        v.setLayoutParams(params);
+        lv.addFooterView(footerView);
     }
 
     @Override

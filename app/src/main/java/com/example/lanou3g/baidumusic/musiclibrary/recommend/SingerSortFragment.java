@@ -76,11 +76,6 @@ public class SingerSortFragment extends BaseFragment {
 
         lv.setVerticalScrollBarEnabled(false);
 
-//        manager.getDefaultDisplay().getMetrics(metrics);
-//        int height = metrics.heightPixels;
-//        params.height = (int) (height / 8);
-//        footerView.setLayoutParams(params);
-
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

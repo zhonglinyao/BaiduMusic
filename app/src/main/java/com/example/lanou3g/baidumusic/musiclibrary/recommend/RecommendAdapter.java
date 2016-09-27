@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.lanou3g.baidumusic.MyApp;
 import com.example.lanou3g.baidumusic.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -63,8 +62,8 @@ public class RecommendAdapter extends RecyclerView.Adapter {
 
         options = new DisplayImageOptions
                 .Builder()
-                .showImageForEmptyUri(R.mipmap.default_live_ic)
-                .showImageOnLoading(R.mipmap.default_live_ic)
+                .showImageForEmptyUri(R.mipmap.default_artist)
+                .showImageOnLoading(R.mipmap.default_artist)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
@@ -125,7 +124,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (position) {
             case 0:
-                if (MyApp.isNetworkAvailable()){
                     ViewHolderCarouse viewHolderCarouse = (ViewHolderCarouse) holder;
                     CarouseAdapter adapter = new CarouseAdapter(context);
                     adapter.setFocusResultBeen(lists.get(position));
@@ -153,11 +151,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                             }
                         }
                     });
-
                     hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
-                }else {
-
-                }
                 break;
             case 1:
                 ViewHolderEntry viewHolderEntry = (ViewHolderEntry) holder;
@@ -201,7 +195,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                         }
                     });
                 }
-
 
                 break;
             case 3:

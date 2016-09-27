@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.example.lanou3g.baidumusic.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,29 +22,24 @@ public class CarouseAdapter extends PagerAdapter {
     private ArrayList<ImageView> views;
     private List<RecommendBean.ResultBean.FocusBean.FocusResultBean> focusResultBeen;
     private Context context;
+    private final DisplayImageOptions options;
 
     public CarouseAdapter(Context context) {
-        ImageLoaderConfiguration configuration =
-                new ImageLoaderConfiguration.Builder(context)
-                        .threadPoolSize(3).diskCacheFileCount(100)
-                        .build();
-        ImageLoader.getInstance().init(configuration);
-
         this.context = context;
+        options = new DisplayImageOptions
+               .Builder()
+               .showImageForEmptyUri(R.mipmap.default_mv)
+               .showImageOnLoading(R.mipmap.default_mv)
+               .cacheInMemory(true)
+               .cacheOnDisk(true)
+               .considerExifParams(true)
+               .build();
     }
 
     public void setFocusResultBeen(List<RecommendBean.ResultBean.FocusBean.FocusResultBean> focusResultBeen) {
         this.focusResultBeen = focusResultBeen;
         views = new ArrayList<>();
-        DisplayImageOptions options =
-                new DisplayImageOptions
-                        .Builder()
-                        .showImageForEmptyUri(R.mipmap.bt_recsong_module_more)
-                        .showImageOnLoading(R.mipmap.bt_recsong_module_more)
-                        .cacheInMemory(true)
-                        .cacheOnDisk(true)
-                        .considerExifParams(true)
-                        .build();
+
         for (int i = 0; i < focusResultBeen.size(); i++) {
             ImageView view = new ImageView(context);
             ImageLoader.getInstance().displayImage(focusResultBeen.get(i).getRandpic(), view, options);

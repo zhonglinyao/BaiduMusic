@@ -199,7 +199,7 @@ public class HotSongMenuBean {
         private int has_mv;
         private String toneid;
         private String resource_type;
-        private String is_ksong;
+        private int is_ksong;
         private String resource_type_ext;
         private String versions;
         private String bitrate_fee;
@@ -327,11 +327,11 @@ public class HotSongMenuBean {
             this.resource_type = resource_type;
         }
 
-        public String getIs_ksong() {
+        public int getIs_ksong() {
             return is_ksong;
         }
 
-        public void setIs_ksong(String is_ksong) {
+        public void setIs_ksong(int is_ksong) {
             this.is_ksong = is_ksong;
         }
 
