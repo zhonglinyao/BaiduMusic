@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class MusicLibraryFragment extends BaseFragment{
 
     private TabLayout tb;
-    private ViewPager vb;
+    public static ViewPager vb;
 
     @Override
     protected int setLayout() {

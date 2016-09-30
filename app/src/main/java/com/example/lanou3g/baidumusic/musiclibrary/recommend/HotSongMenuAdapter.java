@@ -18,10 +18,16 @@ import java.util.List;
 /**
  * Created by dllo on 16/9/27.
  */
-public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<HotSongMenuBean.ContentBean> contentBeen;
     private static final int FOOTER_VIEW = -1;
+    private static final int HEAD_VIEW = -2;
+    private String text;
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public void setContentBeen(List<HotSongMenuBean.ContentBean> contentBeen) {
         this.contentBeen = contentBeen;
@@ -33,8 +39,10 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (position != 0 && position >= contentBeen.size()) {
+        if (position != 0 && position > contentBeen.size()) {
             return FOOTER_VIEW;
+        } else if (0 == position) {
+            return HEAD_VIEW;
         } else {
             return position;
         }
@@ -43,21 +51,24 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == FOOTER_VIEW){
-            View view = LayoutInflater.from(context).inflate(R.layout.layout_footerview, parent, false);
+        if (viewType == FOOTER_VIEW) {
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_footerview_null, parent, false);
             View v = view.findViewById(R.id.footerView);
             ViewGroup.LayoutParams params = v.getLayoutParams();
             WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             DisplayMetrics metrics = new DisplayMetrics();
             manager.getDefaultDisplay().getMetrics(metrics);
-            int width = metrics.widthPixels;
-            params.height = (int) (width / 7);
+            int h = metrics.heightPixels;
+            params.height = (int) (h / 13);
             v.setLayoutParams(params);
             BottomViewHolder bottomViewHolder = new BottomViewHolder(view);
             return bottomViewHolder;
+        } else if (viewType == HEAD_VIEW) {
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_headview_hot_songmenu, parent, false);
+            HeadViewHolder headViewHolder = new HeadViewHolder(view);
+            return headViewHolder;
         } else {
             View view = LayoutInflater.from(context).inflate(R.layout.layout_hot_songmenu_item, parent, false);
-
             ViewHolder viewHolder = new ViewHolder(view);
             return viewHolder;
         }
@@ -65,7 +76,8 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position < contentBeen.size()){
+        if (position < contentBeen.size() + 1 && position > 0) {
+            position = position - 1;
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.tv_name.setText(contentBeen.get(position).getTitle());
             viewHolder.tv_author.setText(contentBeen.get(position).getAuthor());
@@ -78,13 +90,16 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (2 == contentBeen.get(position).getHavehigh()) {
                 viewHolder.iv_sq.setImageResource(R.mipmap.ic_sq);
             }
+        }else if (0 == position){
+            HeadViewHolder headViewHolder = (HeadViewHolder) holder;
+            headViewHolder.tv_head.setText(text);
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return contentBeen == null ? 0 : contentBeen.size() + 1;
+        return contentBeen == null ? 0 : contentBeen.size() + 2;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -107,9 +122,21 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    public static class BottomViewHolder extends RecyclerView.ViewHolder {
+    public class BottomViewHolder extends RecyclerView.ViewHolder {
         public BottomViewHolder(View itemView) {
             super(itemView);
         }
     }
+
+    class HeadViewHolder extends RecyclerView.ViewHolder{
+
+        private final TextView tv_head;
+
+        public HeadViewHolder(View itemView) {
+            super(itemView);
+            tv_head = (TextView) itemView.findViewById(R.id.tv_head_hot_songmenu);
+        }
+    }
+
+
 }

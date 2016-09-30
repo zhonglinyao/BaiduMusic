@@ -35,6 +35,11 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     private ImageHander hander;
     private static ViewPager vp;
     private ListenerCallBack listenerCallBack;
+    private RecommendMoreListener moreListener;
+
+    public void setMoreListener(RecommendMoreListener moreListener) {
+        this.moreListener = moreListener;
+    }
 
     public void setListenerCallBack(ListenerCallBack listenerCallBack) {
         this.listenerCallBack = listenerCallBack;
@@ -181,6 +186,12 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 viewHolderSixImgDiy.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderSixImgDiy.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
+                    viewHolderSixImgDiy.tv_head_more.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            moreListener.callBack(1);
+                        }
+                    });
                 } else {
                     viewHolderSixImgDiy.tv_head_more.setVisibility(View.INVISIBLE);
                 }
@@ -339,6 +350,8 @@ public class RecommendAdapter extends RecyclerView.Adapter {
         return lists == null ? 0 : lists.size();
     }
 
+
+
     class ViewHolderCarouse extends RecyclerView.ViewHolder {
 
         public ViewHolderCarouse(View itemView) {
@@ -399,6 +412,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             TextView tv_author_four = bindView(R.id.tv_author_one_recommend, viewSecondImg);
             TextView tv_author_five = bindView(R.id.tv_author_two_recommend, viewSecondImg);
             TextView tv_author_six = bindView(R.id.tv_author_three_recommend, viewSecondImg);
+
             imageViews = new ImageView[]{img_one, img_two, img_three, img_four, img_fiv, img_six};
             titleTextViews = new TextView[]{tv_title_one, tv_title_two, tv_title_three, tv_title_four, tv_title_five, tv_title_six};
             authorTextViews = new TextView[]{tv_author_one, tv_author_two, tv_author_three, tv_author_four, tv_author_five, tv_author_six};

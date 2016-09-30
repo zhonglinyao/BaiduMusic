@@ -40,7 +40,7 @@ public class MVBean {
 
     public static class ResultBean {
         private int total;
-        private String havemore;
+        private int havemore;
         /**
          * mv_id : 127506988
          * all_artist_id : 18594136
@@ -67,11 +67,11 @@ public class MVBean {
             this.total = total;
         }
 
-        public String getHavemore() {
+        public int getHavemore() {
             return havemore;
         }
 
-        public void setHavemore(String havemore) {
+        public void setHavemore(int havemore) {
             this.havemore = havemore;
         }
 

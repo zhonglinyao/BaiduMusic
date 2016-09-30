@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/ll_refresh_footer_view"
+    android:background="@android:color/white"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/iv_refresh_footer_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@mipmap/view_loading"/>
+    <TextView
+        android:id="@+id/tv_refresh_footer_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="点击刷新更多"
+        android:gravity="center_horizontal"/>
 
 </LinearLayout>

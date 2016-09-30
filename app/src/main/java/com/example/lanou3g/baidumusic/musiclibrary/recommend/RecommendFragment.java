@@ -16,6 +16,7 @@ import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.URLVlaues;
 import com.example.lanou3g.baidumusic.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.MusicLibraryFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -95,7 +96,18 @@ public class RecommendFragment extends BaseFragment {
                 VolleyRequestQueue.getVolleyRequestQueue().addRequest(hotSongMenuBeanGsonRequest);
             }
         });
-
+        adapter.setMoreListener(new RecommendMoreListener() {
+            @Override
+            public void callBack(int i) {
+                switch (i){
+                    case 1:
+                        MusicLibraryFragment.vb.setCurrentItem(1);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         LinearLayoutManager manager = new LinearLayoutManager(context);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setAdapter(adapter);

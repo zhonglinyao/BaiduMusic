@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/cl_hot_songmenu"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@mipmap/bg_lockscreen_default">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/abl_hot_songmenu"
+        android:id="@+id/abl_hot_cd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#90505050"
+        android:background="#20505050"
         android:paddingTop="40dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -24,66 +23,55 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/iv_hot_songmenu"
+                    android:id="@+id/iv_hot_cd"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_gravity="center" />
 
                 <TextView
-                    android:id="@+id/tv_tag_hot_songmenu"
+                    android:id="@+id/tv_tag_hot_cd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="aaaaa"
                     android:textColor="@android:color/white" />
 
-                <RelativeLayout
-                    android:id="@+id/rl_haslistennum_hot_songmenu"
+                <LinearLayout
+                    android:id="@+id/rl_hasdate_hot_cd"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/circle_img_hot_songmenu"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginLeft="10dp" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_name_cdauthor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@id/circle_img_hot_songmenu"
-                        android:textColor="@android:color/white" />
+                        android:drawableRight="@mipmap/artist_dictionary"
+                        android:textColor="@android:color/white"
+                        android:text="aa"
+                        android:gravity="center"
+                        android:drawablePadding="10dp"/>
 
                     <TextView
-                        android:id="@+id/tv_listennum_hot_songmenu"
+                        android:id="@+id/tv_listennum_hot_cd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:maxLines="1"
                         android:text="187"
+                        android:layout_marginLeft="5dp"
                         android:textColor="@android:color/white" />
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/tv_listennum_hot_songmenu"
-                        android:src="@mipmap/ic_listen_count" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_hascollect_hot_songmenu"
+                    android:id="@+id/ll_hascollect_hot_cd"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/ll_collect_hot_songmenu"
+                        android:id="@+id/ll_collect_hot_cd"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -97,7 +85,7 @@
                             android:src="@mipmap/abc_btn_rating_star_off_mtrl_alpha" />
 
                         <TextView
-                            android:id="@+id/tv_collect_count"
+                            android:id="@+id/tv_collect_count_cd"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -110,36 +98,7 @@
                         android:background="@android:color/white" />
 
                     <LinearLayout
-                        android:id="@+id/ll_comment_hot_songmenu"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/layout_hot_songmenu_select"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingBottom="3dp"
-                        android:paddingTop="3dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@mipmap/ic_recmd_homepage_comments" />
-
-                        <TextView
-                            android:id="@+id/tv_Comment_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/white" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/white" />
-
-                    <LinearLayout
-                        android:id="@+id/ll_share_hot_songmenu"
+                        android:id="@+id/ll_share_hot_cd"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -155,7 +114,7 @@
                             android:src="@mipmap/ktv_share_icon_share_normal" />
 
                         <TextView
-                            android:id="@+id/tv_share_count"
+                            android:id="@+id/tv_share_count_cd"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/white" />
@@ -167,7 +126,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_hot_songmenu"
+            android:id="@+id/toolbar_cd"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
@@ -175,49 +134,44 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@android:color/white">
 
                 <TextView
-                    android:id="@+id/tv_songlist_play_hot_songmenu"
+                    android:id="@+id/tv_songlist_play_cd"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:drawableLeft="@mipmap/ic_songlist_play"
                     android:drawablePadding="10dp"
                     android:text="播放全部"
-                    android:gravity="center"
                     android:textColor="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/tv_songlist_count_hot_songmenu"
+                    android:id="@+id/tv_songlist_count_cd"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_alignBottom="@id/tv_songlist_play_hot_songmenu"
-                    android:layout_toRightOf="@id/tv_songlist_play_hot_songmenu" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/tv_songlist_play_cd"
+                    android:layout_toRightOf="@id/tv_songlist_play_cd" />
 
-                <TextView
-                    android:id="@+id/tv_download_hot_songmenu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                <ImageView
+                    android:id="@+id/tv_download_cd"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:drawableLeft="@mipmap/bt_skin_download"
-                    android:gravity="center"
-                    android:text="下载" />
+                    android:src="@mipmap/ic_download_normal"/>
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#505050"
-            android:alpha="0.2"/>
+            android:background="@color/colorLine"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_hot_songmenu"
+        android:id="@+id/rv_hot_cd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
@@ -234,14 +188,14 @@
         android:paddingRight="10dp">
 
         <ImageView
-            android:id="@+id/iv_back_hot_songmenu"
+            android:id="@+id/iv_back_hot_cd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_back_press" />
 
         <TextView
-            android:id="@+id/tv_title_hot_songmenu"
+            android:id="@+id/tv_title_hot_cd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -259,14 +213,6 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/iv_more_hot_songmenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_song_menu_more" />
     </RelativeLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>

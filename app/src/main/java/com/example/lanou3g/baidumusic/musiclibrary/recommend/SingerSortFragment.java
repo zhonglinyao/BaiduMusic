@@ -67,13 +67,12 @@ public class SingerSortFragment extends BaseFragment {
         params.height = h / 4;
         vp.setLayoutParams(params);
         lv.addHeaderView(headView);
-
-//        View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footerview, lv, false);
-//        int h1 = metrics.heightPixels;
-//        params.height = h1 / 8;
-//        footerView.setLayoutParams(params);
-//        lv.addFooterView(footerView);
-
+        View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footerview_null, lv, false);
+        View v = footerView.findViewById(R.id.footerView);
+        ViewGroup.LayoutParams footerParams = v.getLayoutParams();
+        footerParams.height = h / 13;
+        v.setLayoutParams(footerParams);
+        lv.addFooterView(footerView);
         lv.setVerticalScrollBarEnabled(false);
 
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_marginBottom="10dp"
     android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    android:layout_marginRight="10dp"
+    android:background="@android:color/white">
 
     <include layout="@layout/line" />
 
@@ -26,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/img_head_recommend"
             android:textSize="15sp"
-            android:text="aaaa"
             android:layout_centerVertical="true"/>
 
         <TextView

@@ -33,14 +33,14 @@ public class MusicTopFragment extends BaseFragment{
     protected void initView() {
         lv = bindView(R.id.lv_music_top);
         lv.setVerticalScrollBarEnabled(false);
-        View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footerview, lv, false);
+        View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footerview_null, lv, false);
         View v = (View) footerView.findViewById(R.id.footerView);
         ViewGroup.LayoutParams params = v.getLayoutParams();
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(metrics);
-        int width = metrics.widthPixels;
-        params.height = (int) (width / 7);
+        int h = metrics.heightPixels;
+        params.height = (int) (h / 13);
         v.setLayoutParams(params);
         lv.addFooterView(footerView);
     }

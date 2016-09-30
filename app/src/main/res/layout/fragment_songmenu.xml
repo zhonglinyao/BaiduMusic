@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <TextView
@@ -22,8 +23,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:drawablePadding="8dp"
+                android:layout_centerVertical="true"
                 android:drawableRight="@mipmap/bt_mv_pull_down_normal"
                 android:text="全部"
+                android:textSize="15sp"
                 android:textColor="#000000" />
 
             <TextView
@@ -32,27 +35,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:text="最热"
-                android:textColor="#000000" />
+                android:text="最新"
+                android:layout_centerVertical="true" />
 
-            <ImageView
+            <View
                 android:id="@+id/img_munu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0.5dp"
+                android:layout_height="15dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@id/tv_now_songmenu"
-                android:src="@mipmap/img_live_integral" />
+                android:background="@color/colorLine"/>
 
             <TextView
                 android:id="@+id/tv_hot_songmenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/img_munu"
-                android:text="最新"
-                android:textColor="#000000" />
+                android:text="最热" />
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
 

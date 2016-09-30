@@ -15,8 +15,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <ImageButton
-                android:id="@+id/ib_recycleview_songmenu"
+            <ImageView
+                android:id="@+id/iv_play_recycleview_songmenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
