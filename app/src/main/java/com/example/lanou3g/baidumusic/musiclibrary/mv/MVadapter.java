@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lanou3g.baidumusic.R;
+import com.example.lanou3g.baidumusic.main.ImageLoderSetting;
 import com.example.lanou3g.baidumusic.musiclibrary.recommend.RefreshListenerCallBack;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -23,7 +23,6 @@ import java.util.List;
  * Created by dllo on 16/9/27.
  */
 public class MVadapter extends RecyclerView.Adapter {
-    private final DisplayImageOptions options;
     private Context context;
     private List<MVBean.ResultBean.MvListBean> mvListBeen;
     private RefreshListenerCallBack refreshListener;
@@ -62,14 +61,6 @@ public class MVadapter extends RecyclerView.Adapter {
     public MVadapter(Context context) {
         this.context = context;
         mvListBeen = new ArrayList<>();
-        options = new DisplayImageOptions
-                .Builder()
-                .showImageForEmptyUri(R.mipmap.default_mv)
-                .showImageOnLoading(R.mipmap.default_mv)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .build();
     }
 
     @Override
@@ -98,7 +89,7 @@ public class MVadapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position < mvListBeen.size()) {
             ViewHolder viewHolder = (ViewHolder) holder;
-            ImageLoader.getInstance().displayImage(mvListBeen.get(position).getThumbnail(), viewHolder.img, options);
+            ImageLoader.getInstance().displayImage(mvListBeen.get(position).getThumbnail(), viewHolder.img, ImageLoderSetting.getMvOptions());
             viewHolder.tv_title.setText(mvListBeen.get(position).getTitle());
             viewHolder.tv_author.setText(mvListBeen.get(position).getArtist());
         } else {

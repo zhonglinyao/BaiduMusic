@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 /**
  * Created by dllo on 16/9/19.
  */
-public abstract class BaseFragment extends Fragment{
+public abstract class BaseFragment extends Fragment implements View.OnTouchListener {
     protected Context context;
 
     @Override
@@ -29,6 +30,7 @@ public abstract class BaseFragment extends Fragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        view.setOnTouchListener(this);
         initView();
     }
 
@@ -50,5 +52,10 @@ public abstract class BaseFragment extends Fragment{
 
     protected <T extends View> T bindView(int id, View v){
         return (T) v.findViewById(id);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
     }
 }

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -19,6 +21,16 @@ import java.io.File;
  */
 public class MyApp extends Application{
     private static Context mContext;
+    private static int mWindowWidth;
+    private static int mWindowHeight;
+
+    public static int getWindowHeight() {
+        return mWindowHeight;
+    }
+
+    public static int getWindowWidth() {
+        return mWindowWidth;
+    }
 
     public static Context getmContext() {
         return mContext;
@@ -42,11 +54,18 @@ public class MyApp extends Application{
         ImageLoaderConfiguration configuration =
                 new ImageLoaderConfiguration
                         .Builder(this)
-                        .threadPoolSize(3).diskCacheFileCount(100)
+                        .threadPoolSize(3)
+                        .diskCacheFileCount(100)
                         .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                         .diskCache(new UnlimitedDiscCache(cacheDir))
                         .memoryCache(new WeakMemoryCache())
                         .build();
         ImageLoader.getInstance().init(configuration);
+
+        WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        mWindowWidth = metrics.widthPixels;
+        mWindowHeight = metrics.heightPixels;
     }
 }

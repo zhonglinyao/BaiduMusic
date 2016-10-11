@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/cl_hot_songmenu"
-    android:background="@mipmap/bg_lockscreen_default">
+    android:id="@+id/cl_hot_songmenu">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/abl_hot_songmenu"
@@ -92,8 +91,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:src="@mipmap/abc_btn_rating_star_off_mtrl_alpha" />
 
                         <TextView
@@ -121,8 +120,8 @@
                         android:paddingTop="3dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:src="@mipmap/ic_recmd_homepage_comments" />
 
                         <TextView
@@ -150,8 +149,8 @@
                         android:paddingTop="3dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:src="@mipmap/ktv_share_icon_share_normal" />
 
                         <TextView
@@ -211,9 +210,9 @@
         </android.support.v7.widget.Toolbar>
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="#505050"
-            android:alpha="0.2"/>
+            android:layout_height="0.2dp"
+            android:background="#0F0F0F"
+            android:alpha="0.1"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -235,8 +234,8 @@
 
         <ImageView
             android:id="@+id/iv_back_hot_songmenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_back_press" />
 
@@ -261,8 +260,8 @@
 
         <ImageView
             android:id="@+id/iv_more_hot_songmenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_song_menu_more" />

@@ -1,4 +1,4 @@
-package com.example.lanou3g.baidumusic.musiclibrary.recommend;
+package com.example.lanou3g.baidumusic.musiclibrary.songmenu;
 
 import java.util.List;
 

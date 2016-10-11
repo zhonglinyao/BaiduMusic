@@ -17,9 +17,13 @@ public class URLVlaues {
     public static final String SINGER_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.artist.getList&format=json&order=1&limit=12&offset=0&area=0&sex=0&abc=&from=ios&version=5.2.1&from=ios&channel=appstore";
     public static final String NEW_RECOMMEND = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=1413c&operator=1&method=baidu.ting.plaza.index&cuid=8ADCB33F64DBB1F5314036551C922491";
 
+    public static String MUSICTOP_SONGLIST = "";
+    private static final String MUSICTOP_SONGLIST_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=";
+    private static final String MUSICTOP_SONGLIST_END = "&format=json&offset=0&size=50&from=ios&fields=title,song_id,author,resource_type,havehigh,is_new,has_mv_mobile,album_title,ting_uid,album_id,charge,all_rate&version=5.2.1&from=ios&channel=appstore";
+
     private static String PLAY_SONG = "";
-    public static final String PLAY_SONG_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=webapp_music&method=baidu.ting.song.play&format=json&callback=&songid=";
-    private static String PLAY_SONG_END = "&_=1413017198449";
+    private static final String PLAY_SONG_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=webapp_music&method=baidu.ting.song.play&format=json&callback=&songid=";
+    private static final String PLAY_SONG_END = "&_=1413017198449";
 
     private static String HOT_SONG_MENU = "";
     private static final String HOT_SONG_MENU_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.diy.gedanInfo&from=ios&listid=";
@@ -37,6 +41,12 @@ public class URLVlaues {
     private static final String MV_TWO = "&page_num=";
     private static final String MV_THREE = "&page_size=20&query=%E5%85%A8%E9%83%A8";
 
+    public static String getMusictopSonglist(int type) {
+        MUSICTOP_SONGLIST = "";
+        MUSICTOP_SONGLIST = MUSICTOP_SONGLIST_HEAD + type + MUSICTOP_SONGLIST_END;
+        return MUSICTOP_SONGLIST;
+    }
+
     public static String getMvUrl(Boolean isNew, int pageNmu) {
         if (isNew){
             MV_URL = MV_ONE + 1 + MV_TWO + pageNmu + MV_THREE;
@@ -48,11 +58,13 @@ public class URLVlaues {
     }
 
     public static String getPlaySong(String song_id) {
+        PLAY_SONG = "";
         PLAY_SONG = PLAY_SONG_HEAD + song_id + PLAY_SONG_END;
         return PLAY_SONG;
     }
 
     public static String getHotSongMenu(String s) {
+        HOT_SONG_MENU = "";
         HOT_SONG_MENU = HOT_SONG_MENU_HEAD + s + HOT_SONG_MENU_END;
         return HOT_SONG_MENU;
     }

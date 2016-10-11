@@ -1,30 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_playsong_play"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_playsong_mode"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@mipmap/bt_list_order_normal"/>
+
+        <ImageView
+            android:id="@+id/iv_playsong_prev"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@mipmap/bt_notificationbar_prev"/>
+
+        <ImageView
+            android:id="@+id/iv_playsong_play"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/iv_playsong_next"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@mipmap/bt_notificationbar_next"/>
+
+        <ImageView
+            android:id="@+id/iv_playsong_songlist"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@mipmap/bt_minibar_playinglist_normal"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_seekbar_play"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_above="@id/ll_playsong_play">
+
+        <TextView
+            android:id="@+id/tv_pasttime_play"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="04:32"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/tv_songtime_play"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:text="04:32"
+            android:textSize="10sp"/>
+
+        <SeekBar
+            android:id="@+id/sb_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_songtime_play"
+            android:layout_toRightOf="@id/tv_pasttime_play"
+            android:maxHeight="2dp"
+            android:minHeight="2dp"
+            android:progressDrawable="@drawable/po_seekbar"
+            android:thumb="@mipmap/bt_progress_nor"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_share_play"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_above="@id/rl_seekbar_play"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_listmore_love_normal"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_listmore_download_normal"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_listmore_share_normal"/>
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
-</LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_share_play">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_playsong"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iv_back_playsong"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_back_press"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</RelativeLayout>

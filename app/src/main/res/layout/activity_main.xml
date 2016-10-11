@@ -1,122 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_all_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/fl_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:id="@+id/rl_top"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="#10AFFF">
-
-                <ImageView
-                    android:id="@+id/ib_more_main"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/bt_localsonglist_move_press" />
-
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tb_main"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null" />
-
-                <ImageButton
-                    android:id="@+id/ib_search_main"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@mipmap/bt_titlebar_new_search_normal" />
-
-            </RelativeLayout>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vp_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/rl_top">
-
-            </android.support.v4.view.ViewPager>
-        </RelativeLayout>
-    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/rl_main"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/play_song_shape">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/img_main"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@mipmap/default_skin_thumbnail" />
+        <FrameLayout
+            android:id="@+id/fl_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:layout_toRightOf="@id/img_main"
-            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_songName_main"
+                <RelativeLayout
+                    android:id="@+id/rl_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="#10AFFF">
+
+                    <ImageView
+                        android:id="@+id/ib_more_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/bt_localsonglist_move_press"/>
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tb_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"/>
+
+                    <ImageButton
+                        android:id="@+id/ib_search_main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@mipmap/bt_titlebar_new_search_normal"/>
+
+                </RelativeLayout>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/rl_top">
+
+                </android.support.v4.view.ViewPager>
+            </RelativeLayout>
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_playing"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/play_song_shape">
+
+            <ImageView
+                android:id="@+id/img_main"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/default_skin_thumbnail"/>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="zaaaa" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/img_main"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_name_main"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="aaaaaa"
-                android:textSize="10sp" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_songtitle_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-        <ImageView
-            android:id="@+id/iv_song_list_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/bt_minibar_playinglist_normal" />
+                <TextView
+                    android:id="@+id/tv_author_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"/>
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_next_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/iv_song_list_main"
-            android:src="@mipmap/bt_minibar_next_normal" />
+            <ImageView
+                android:id="@+id/iv_song_list_main"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/bt_minibar_playinglist_normal"/>
 
-        <ImageView
-            android:id="@+id/iv_play_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/iv_next_main"
-            android:src="@mipmap/bt_minibar_play_normal" />
+            <ImageView
+                android:id="@+id/iv_next_main"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_song_list_main"
+                android:src="@mipmap/bt_minibar_next_normal"/>
+
+            <ImageView
+                android:id="@+id/iv_play_main"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_next_main"
+                android:src="@mipmap/bt_minibar_play_normal"/>
+        </RelativeLayout>
+
     </RelativeLayout>
 
-</RelativeLayout>
+</FrameLayout>

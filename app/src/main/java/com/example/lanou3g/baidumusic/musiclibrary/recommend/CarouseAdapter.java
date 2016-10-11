@@ -18,7 +18,6 @@ import java.util.List;
  * Created by dllo on 16/9/20.
  */
 public class CarouseAdapter extends PagerAdapter {
-    //    private ArrayList<SimpleDraweeView> views = new ArrayList<>();
     private ArrayList<ImageView> views;
     private List<RecommendBean.ResultBean.FocusBean.FocusResultBean> focusResultBeen;
     private Context context;
@@ -26,6 +25,7 @@ public class CarouseAdapter extends PagerAdapter {
 
     public CarouseAdapter(Context context) {
         this.context = context;
+        views = new ArrayList<>();
         options = new DisplayImageOptions
                .Builder()
                .showImageForEmptyUri(R.mipmap.default_mv)
@@ -38,7 +38,7 @@ public class CarouseAdapter extends PagerAdapter {
 
     public void setFocusResultBeen(List<RecommendBean.ResultBean.FocusBean.FocusResultBean> focusResultBeen) {
         this.focusResultBeen = focusResultBeen;
-        views = new ArrayList<>();
+        views.clear();
 
         for (int i = 0; i < focusResultBeen.size(); i++) {
             ImageView view = new ImageView(context);
@@ -79,4 +79,5 @@ public class CarouseAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         
     }
+
 }

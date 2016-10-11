@@ -17,6 +17,8 @@ import com.example.lanou3g.baidumusic.URLVlaues;
 import com.example.lanou3g.baidumusic.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.MusicLibraryFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.songmenu.HotSongMenuBean;
+import com.example.lanou3g.baidumusic.musiclibrary.songmenu.HotSongMenuFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

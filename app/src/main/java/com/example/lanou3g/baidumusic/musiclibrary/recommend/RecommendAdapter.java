@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lanou3g.baidumusic.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.example.lanou3g.baidumusic.main.ImageLoderSetting;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.lang.ref.WeakReference;
@@ -31,7 +31,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     private ArrayList<List> lists;
     private ArrayList<RecommendBean.ModuleBean> moduleBeen = new ArrayList<>();
     private final int[] layout;
-    private final DisplayImageOptions options;
     private ImageHander hander;
     private static ViewPager vp;
     private ListenerCallBack listenerCallBack;
@@ -64,15 +63,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 R.layout.item_broadcasting_recycleview_recommend, R.layout.item_recsong_recycleview_recommend,
                 R.layout.item_threeimg_recycleview_recommend, R.layout.item_siximg_recycleview_recommend,
                 R.layout.item_siximg_recycleview_recommend, R.layout.item_column_recycleview_recommend};
-
-        options = new DisplayImageOptions
-                .Builder()
-                .showImageForEmptyUri(R.mipmap.default_artist)
-                .showImageOnLoading(R.mipmap.default_artist)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .build();
     }
 
     @Override
@@ -129,34 +119,34 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (position) {
             case 0:
-                    ViewHolderCarouse viewHolderCarouse = (ViewHolderCarouse) holder;
-                    CarouseAdapter adapter = new CarouseAdapter(context);
-                    adapter.setFocusResultBeen(lists.get(position));
-                    vp.setAdapter(adapter);
-                    vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                        @Override
-                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                ViewHolderCarouse viewHolderCarouse = (ViewHolderCarouse) holder;
+                CarouseAdapter adapter = new CarouseAdapter(context);
+                adapter.setFocusResultBeen(lists.get(position));
+                vp.setAdapter(adapter);
+                vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onPageSelected(int position) {
-                            hander.sendMessage(Message.obtain(hander, ImageHander.MSG_PAGE, position, 0));
-                        }
+                    @Override
+                    public void onPageSelected(int position) {
+                        hander.sendMessage(Message.obtain(hander, ImageHander.MSG_PAGE, position, 0));
+                    }
 
-                        @Override
-                        public void onPageScrollStateChanged(int state) {
-                            switch (state) {
-                                case ViewPager.SCROLL_STATE_DRAGGING:
-                                    hander.sendEmptyMessage(ImageHander.MSG_KEEP);
-                                    break;
-                                case ViewPager.SCROLL_STATE_IDLE:
-                                    hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
-                                    break;
-                            }
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        switch (state) {
+                            case ViewPager.SCROLL_STATE_DRAGGING:
+                                hander.sendEmptyMessage(ImageHander.MSG_KEEP);
+                                break;
+                            case ViewPager.SCROLL_STATE_IDLE:
+                                hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
+                                break;
                         }
-                    });
-                    hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
+                    }
+                });
+                hander.sendEmptyMessageDelayed(ImageHander.MSG_UPDATE, ImageHander.MSG_DELAY);
                 break;
             case 1:
                 ViewHolderEntry viewHolderEntry = (ViewHolderEntry) holder;
@@ -182,7 +172,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             case 2:
                 final List<RecommendBean.ResultBean.DiyBean.DiyResultBean> diyResultBeen = lists.get(position);
                 ViewHolderSixImg viewHolderSixImgDiy = (ViewHolderSixImg) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgDiy.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgDiy.img_head, ImageLoderSetting.getOptions());
                 viewHolderSixImgDiy.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderSixImgDiy.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -196,7 +186,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                     viewHolderSixImgDiy.tv_head_more.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < 6; i++) {
-                    ImageLoader.getInstance().displayImage(diyResultBeen.get(i).getPic(), viewHolderSixImgDiy.imageViews[i], options);
+                    ImageLoader.getInstance().displayImage(diyResultBeen.get(i).getPic(), viewHolderSixImgDiy.imageViews[i], ImageLoderSetting.getOptions());
                     viewHolderSixImgDiy.titleTextViews[i].setText(diyResultBeen.get(i).getTitle());
                     final int finalI = i;
                     viewHolderSixImgDiy.imageViews[i].setOnClickListener(new View.OnClickListener() {
@@ -211,7 +201,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             case 3:
                 List<RecommendBean.ResultBean.Mix1Bean.Mix1ResultBean> mix1ResultBeen = lists.get(position);
                 ViewHolderSixImg viewHolderSixImgMix1 = (ViewHolderSixImg) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgMix1.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgMix1.img_head, ImageLoderSetting.getOptions());
                 viewHolderSixImgMix1.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderSixImgMix1.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -220,7 +210,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 }
 
                 for (int i = 0; i < 6; i++) {
-                    ImageLoader.getInstance().displayImage(mix1ResultBeen.get(i).getPic(), viewHolderSixImgMix1.imageViews[i], options);
+                    ImageLoader.getInstance().displayImage(mix1ResultBeen.get(i).getPic(), viewHolderSixImgMix1.imageViews[i], ImageLoderSetting.getOptions());
                     viewHolderSixImgMix1.titleTextViews[i].setText(mix1ResultBeen.get(i).getTitle());
                     viewHolderSixImgMix1.authorTextViews[i].setText(mix1ResultBeen.get(i).getAuthor());
                 }
@@ -228,7 +218,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             case 4:
                 List<RecommendBean.ResultBean.Mix22Bean.Mix22ResultBean> mix22ResultBeen = lists.get(position);
                 ViewHolderThreeImg viewHolderThreeImgMix22 = (ViewHolderThreeImg) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderThreeImgMix22.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderThreeImgMix22.img_head, ImageLoderSetting.getOptions());
                 viewHolderThreeImgMix22.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderThreeImgMix22.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -236,7 +226,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                     viewHolderThreeImgMix22.tv_head_more.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < 3; i++) {
-                    ImageLoader.getInstance().displayImage(mix22ResultBeen.get(i).getPic(), viewHolderThreeImgMix22.imageViews[i], options);
+                    ImageLoader.getInstance().displayImage(mix22ResultBeen.get(i).getPic(), viewHolderThreeImgMix22.imageViews[i], ImageLoderSetting.getOptions());
                     viewHolderThreeImgMix22.titleTextViews[i].setText(mix22ResultBeen.get(i).getTitle());
                     viewHolderThreeImgMix22.authorTextViews[i].setText(mix22ResultBeen.get(i).getAuthor());
                 }
@@ -244,12 +234,12 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             case 5:
                 List<RecommendBean.ResultBean.AdSmallBean.AdSmallResultBean> adSmallResultBeen = lists.get(position);
                 ViewHolderAdvertisement viewHolderAdvertisement = (ViewHolderAdvertisement) holder;
-                ImageLoader.getInstance().displayImage(adSmallResultBeen.get(0).getPic(), viewHolderAdvertisement.imgAdvertisement, options);
+                ImageLoader.getInstance().displayImage(adSmallResultBeen.get(0).getPic(), viewHolderAdvertisement.imgAdvertisement, ImageLoderSetting.getOptions());
                 break;
             case 6:
                 List<RecommendBean.ResultBean.SceneBean.SceneResultBean.ActionBean> actionBeen = lists.get(position);
                 ViewHolderScene viewHolderScene = (ViewHolderScene) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderScene.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderScene.img_head, ImageLoderSetting.getOptions());
                 viewHolderScene.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderScene.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -257,14 +247,14 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                     viewHolderScene.tv_head_more.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < 4; i++) {
-                    ImageLoader.getInstance().displayImage(actionBeen.get(i).getIcon_android(), viewHolderScene.imageViews[i], options);
+                    ImageLoader.getInstance().displayImage(actionBeen.get(i).getIcon_android(), viewHolderScene.imageViews[i], ImageLoderSetting.getOptions());
                     viewHolderScene.textViews[i].setText(actionBeen.get(i).getScene_name());
                 }
                 break;
             case 7:
                 List<RecommendBean.ResultBean.RecsongBean.RecsongResultBean> recsongResultBeen = lists.get(position);
                 ViewHolderRecsong viewHolderRecsong = (ViewHolderRecsong) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderRecsong.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderRecsong.img_head, ImageLoderSetting.getOptions());
                 viewHolderRecsong.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderRecsong.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -280,7 +270,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             case 8:
                 List<RecommendBean.ResultBean.Mix9Bean.Mix9ResultBean> mix9ResultBeen = lists.get(position);
                 ViewHolderThreeImg viewHolderThreeImgMix9 = (ViewHolderThreeImg) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderThreeImgMix9.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderThreeImgMix9.img_head, ImageLoderSetting.getOptions());
                 viewHolderThreeImgMix9.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderThreeImgMix9.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -288,14 +278,14 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                     viewHolderThreeImgMix9.tv_head_more.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < 3; i++) {
-                    ImageLoader.getInstance().displayImage(mix9ResultBeen.get(i).getPic(), viewHolderThreeImgMix9.imageViews[i], options);
+                    ImageLoader.getInstance().displayImage(mix9ResultBeen.get(i).getPic(), viewHolderThreeImgMix9.imageViews[i], ImageLoderSetting.getOptions());
                     viewHolderThreeImgMix9.titleTextViews[i].setText(mix9ResultBeen.get(i).getTitle());
                 }
                 break;
             case 9:
                 List<RecommendBean.ResultBean.Mix5Bean.Mix5ResultBean> mix5ResultBeen = lists.get(position);
                 ViewHolderSixImg viewHolderSixImgMix5 = (ViewHolderSixImg) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgMix5.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgMix5.img_head, ImageLoderSetting.getOptions());
                 viewHolderSixImgMix5.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderSixImgMix5.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -304,7 +294,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 }
 
                 for (int i = 0; i < 6; i++) {
-                    ImageLoader.getInstance().displayImage(mix5ResultBeen.get(i).getPic(), viewHolderSixImgMix5.imageViews[i], options);
+                    ImageLoader.getInstance().displayImage(mix5ResultBeen.get(i).getPic(), viewHolderSixImgMix5.imageViews[i], ImageLoderSetting.getOptions());
                     viewHolderSixImgMix5.titleTextViews[i].setText(mix5ResultBeen.get(i).getTitle());
                     viewHolderSixImgMix5.authorTextViews[i].setText(mix5ResultBeen.get(i).getAuthor());
                 }
@@ -312,7 +302,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             case 10:
                 List<RecommendBean.ResultBean.RadioBean.RadioResultBean> radioResultBeen = lists.get(position);
                 ViewHolderSixImg viewHolderSixImgRadio = (ViewHolderSixImg) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgRadio.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderSixImgRadio.img_head, ImageLoderSetting.getOptions());
                 viewHolderSixImgRadio.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderSixImgRadio.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -320,14 +310,14 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                     viewHolderSixImgRadio.tv_head_more.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < 6; i++) {
-                    ImageLoader.getInstance().displayImage(radioResultBeen.get(i).getPic(), viewHolderSixImgRadio.imageViews[i], options);
+                    ImageLoader.getInstance().displayImage(radioResultBeen.get(i).getPic(), viewHolderSixImgRadio.imageViews[i], ImageLoderSetting.getOptions());
                     viewHolderSixImgRadio.titleTextViews[i].setText(radioResultBeen.get(i).getTitle());
                 }
                 break;
             case 11:
                 List<RecommendBean.ResultBean.Mod7Bean.Mod7ResultBean> mod7ResultBeen = lists.get(position);
                 ViewHolderColumn viewHolderColumn = (ViewHolderColumn) holder;
-                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderColumn.img_head, options);
+                ImageLoader.getInstance().displayImage(moduleBeen.get(position).getPicurl(), viewHolderColumn.img_head, ImageLoderSetting.getOptions());
                 viewHolderColumn.tv_head_title.setText(moduleBeen.get(position).getTitle());
                 if (IsMore(moduleBeen.get(position).getTitle_more())) {
                     viewHolderColumn.tv_head_more.setText(moduleBeen.get(position).getTitle_more());
@@ -335,7 +325,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                     viewHolderColumn.tv_head_more.setVisibility(View.INVISIBLE);
                 }
                 for (int i = 0; i < 4; i++) {
-                    ImageLoader.getInstance().displayImage(mod7ResultBeen.get(i).getPic(), viewHolderColumn.imageViews[i], options);
+                    ImageLoader.getInstance().displayImage(mod7ResultBeen.get(i).getPic(), viewHolderColumn.imageViews[i], ImageLoderSetting.getOptions());
                     viewHolderColumn.titleTextViews[i].setText(mod7ResultBeen.get(i).getTitle());
                     viewHolderColumn.authorTextViews[i].setText(mod7ResultBeen.get(i).getDesc());
                 }
@@ -349,7 +339,6 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return lists == null ? 0 : lists.size();
     }
-
 
 
     class ViewHolderCarouse extends RecyclerView.ViewHolder {

@@ -1,20 +1,23 @@
 package com.example.lanou3g.baidumusic.musiclibrary.musictop;
 
-import android.content.Context;
-import android.util.DisplayMetrics;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.lanou3g.baidumusic.GsonRequest;
+import com.example.lanou3g.baidumusic.MyApp;
 import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.URLVlaues;
 import com.example.lanou3g.baidumusic.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
+import com.example.lanou3g.baidumusic.main.PlayMusicTopEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,12 @@ import java.util.ArrayList;
 public class MusicTopFragment extends BaseFragment{
 
     private ListView lv;
+    private MusicTopAdapter mAdapter;
+    private MusicTopBean.TopNameBean mNameBean;
+    private MusicTopSongListFragment mMusicTopSongListFragment;
+    private MusicTopSongListBean mMusicTopSongListBean;
+    private PlayMusicTopEvent mPlayMusicTopEvent;
+
     @Override
     protected int setLayout() {
         return R.layout.fragment_musictop;
@@ -36,27 +45,101 @@ public class MusicTopFragment extends BaseFragment{
         View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footerview_null, lv, false);
         View v = (View) footerView.findViewById(R.id.footerView);
         ViewGroup.LayoutParams params = v.getLayoutParams();
-        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(metrics);
-        int h = metrics.heightPixels;
-        params.height = (int) (h / 13);
+        params.height = (int) (MyApp.getWindowHeight() / 13);
         v.setLayoutParams(params);
         lv.addFooterView(footerView);
     }
 
     @Override
     protected void initData() {
-        final MusicTopAdapter adapter = new MusicTopAdapter(context);
+        mAdapter = new MusicTopAdapter(context);
+        mAdapter.setMusicTopListener(new MusicTopListener() {
+            @Override
+            public void playAllListener(final MusicTopBean.TopNameBean topNameBean) {
+                if (mNameBean != null && mNameBean.getType() == topNameBean.getType()){
+                    PlayMusicTopEvent playMusicTopEvent = new PlayMusicTopEvent();
+                    playMusicTopEvent.setItem(0);
+                    playMusicTopEvent.setSongListBeen(mMusicTopSongListBean.getSong_list());
+                    EventBus.getDefault().post(playMusicTopEvent);
+                } else {
+                    mNameBean = topNameBean;
+                    GsonRequest<MusicTopSongListBean> gsonRequest =
+                            new GsonRequest<>(
+                                    URLVlaues.getMusictopSonglist(topNameBean.getType()),
+                                    MusicTopSongListBean.class,
+                                    new Response.Listener<MusicTopSongListBean>() {
+
+                                        @Override
+                                        public void onResponse(MusicTopSongListBean response) {
+                                            mMusicTopSongListBean = response;
+                                            if (mPlayMusicTopEvent == null){
+                                                mPlayMusicTopEvent = new PlayMusicTopEvent();
+                                            }
+                                            mPlayMusicTopEvent.setItem(0);
+                                            mPlayMusicTopEvent.setSongListBeen(mMusicTopSongListBean.getSong_list());
+                                            EventBus.getDefault().post(mPlayMusicTopEvent);
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+                                    });
+                    VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
+                }
+            }
+
+            @Override
+            public void jumpListener(MusicTopBean.TopNameBean topNameBean) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                final FragmentTransaction transaction = manager.beginTransaction();
+                if (mNameBean != null && mNameBean.getType() == topNameBean.getType()){
+                    if (mMusicTopSongListFragment == null){
+                        mMusicTopSongListFragment = new MusicTopSongListFragment();
+                    }
+                    mMusicTopSongListFragment.setMusicTopSongListBean(mMusicTopSongListBean);
+                    transaction.setCustomAnimations(R.anim.fragment_slide_in_right, R.anim.anim_null);
+                    transaction.add(R.id.fl_main, mMusicTopSongListFragment);
+                    transaction.commit();
+                } else {
+                    mNameBean = topNameBean;
+                    GsonRequest<MusicTopSongListBean> gsonRequest =
+                            new GsonRequest<>(
+                                    URLVlaues.getMusictopSonglist(topNameBean.getType()),
+                                    MusicTopSongListBean.class,
+                                    new Response.Listener<MusicTopSongListBean>() {
+                                        @Override
+                                        public void onResponse(MusicTopSongListBean response) {
+                                            mMusicTopSongListBean = response;
+                                            if (mMusicTopSongListFragment == null){
+                                                mMusicTopSongListFragment = new MusicTopSongListFragment();
+                                            }
+                                            mMusicTopSongListFragment.setMusicTopSongListBean(mMusicTopSongListBean);
+                                            transaction.setCustomAnimations(R.anim.fragment_songlist_slide_in, R.anim.anim_null);
+                                            transaction.add(R.id.fl_main, mMusicTopSongListFragment);
+                                            transaction.commit();
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+
+                                        }
+                                    });
+                    VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
+                }
+            }
+        });
         GsonRequest<MusicTopBean> gsonRequest =
-                new GsonRequest<MusicTopBean>(URLVlaues.MUSIC_TOP,
+                new GsonRequest<>(URLVlaues.MUSIC_TOP,
                         MusicTopBean.class,
                         new Response.Listener<MusicTopBean>() {
                             @Override
                             public void onResponse(MusicTopBean response) {
                                 ArrayList<MusicTopBean.TopNameBean> list = (ArrayList<MusicTopBean.TopNameBean>) response.getTopName();
-                                adapter.setList(list);
-                                lv.setAdapter(adapter);
+                                mAdapter.setList(list);
+                                lv.setAdapter(mAdapter);
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -65,5 +148,10 @@ public class MusicTopFragment extends BaseFragment{
                     }
                 });
         VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }

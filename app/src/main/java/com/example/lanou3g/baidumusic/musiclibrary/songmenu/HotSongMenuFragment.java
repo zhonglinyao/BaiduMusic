@@ -1,36 +1,33 @@
-package com.example.lanou3g.baidumusic.musiclibrary.recommend;
+package com.example.lanou3g.baidumusic.musiclibrary.songmenu;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.lanou3g.baidumusic.DividerItemDecoration;
+import com.example.lanou3g.baidumusic.MyApp;
 import com.example.lanou3g.baidumusic.R;
+import com.example.lanou3g.baidumusic.Tools;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.example.lanou3g.baidumusic.main.ImageLoderSetting;
+import com.example.lanou3g.baidumusic.main.PlaySongMenuEvent;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by dllo on 16/9/27.
@@ -49,11 +46,11 @@ public class HotSongMenuFragment extends BaseFragment {
     private TextView tv_songlist;
     private TextView tv_download;
     private TextView tv_playAll;
-    private DisplayImageOptions options;
     private AppBarLayout ab;
     private RelativeLayout rl;
     private LinearLayout ll;
     private CoordinatorLayout cl;
+    private HotSongMenuAdapter mAdapter;
 
     public void setHotSongMenuBean(HotSongMenuBean hotSongMenuBean) {
         this.hotSongMenuBean = hotSongMenuBean;
@@ -97,36 +94,23 @@ public class HotSongMenuFragment extends BaseFragment {
         rl = bindView(R.id.rl_haslistennum_hot_songmenu);
         ll = bindView(R.id.ll_hascollect_hot_songmenu);
         cl = bindView(R.id.cl_hot_songmenu);
-
-        options = new DisplayImageOptions
-                .Builder()
-                .showImageForEmptyUri(R.mipmap.default_artist)
-                .showImageOnLoading(R.mipmap.default_artist)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .build();
     }
 
     @Override
     protected void initData() {
         tv_title.setText(hotSongMenuBean.getTitle());
         ViewGroup.LayoutParams params = img.getLayoutParams();
-        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(metrics);
-        final int h = metrics.heightPixels;
-        params.width = h / 4;
-        params.height = h / 4;
+        params.width = MyApp.getWindowWidth() / 3;
+        params.height = MyApp.getWindowWidth() / 3;
         img.setLayoutParams(params);
-        ImageLoader.getInstance().displayImage(hotSongMenuBean.getPic_300(), img, options,
+        ImageLoader.getInstance().displayImage(hotSongMenuBean.getPic_300(), img, ImageLoderSetting.getOptions(),
                 new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        Bitmap bitmap = changeBackgroundImage(loadedImage);
+                        Bitmap bitmap = Tools.changeBackgroundImage(loadedImage, 22.0f);
                         if (bitmap != null) {
-                            Drawable drawable = new BitmapDrawable(bitmap);
+                            Drawable drawable = new BitmapDrawable(getResources(), bitmap);
                             cl.setBackground(drawable);
                         }
                     }
@@ -147,22 +131,31 @@ public class HotSongMenuFragment extends BaseFragment {
         tv_comment.setText("评论");
         tv_share.setText("分享");
         tv_songlist.setText("/" + hotSongMenuBean.getContent().size() + "首歌");
-        HotSongMenuAdapter adapter = new HotSongMenuAdapter(context);
-        adapter.setText(hotSongMenuBean.getDesc());
-        adapter.setContentBeen(hotSongMenuBean.getContent());
-        rv.setAdapter(adapter);
+        mAdapter = new HotSongMenuAdapter(context);
+        mAdapter.setText(hotSongMenuBean.getDesc());
+        mAdapter.setContentBeen(hotSongMenuBean.getContent());
+        rv.setAdapter(mAdapter);
         LinearLayoutManager manager1 = new LinearLayoutManager(context);
         rv.setLayoutManager(manager1);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST);
         rv.addItemDecoration(dividerItemDecoration);
+        tv_playAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlaySongMenuEvent playSongMenuEvent = new PlaySongMenuEvent();
+                playSongMenuEvent.setContentBeen(hotSongMenuBean.getContent());
+                playSongMenuEvent.setItem(0);
+                EventBus.getDefault().post(playSongMenuEvent);
+            }
+        });
         ab.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (verticalOffset < -(h / 4)) {
+                if (verticalOffset < -(MyApp.getWindowWidth() / 4)) {
                     rl.setVisibility(View.INVISIBLE);
                     ll.setVisibility(View.INVISIBLE);
                 }
-                if (verticalOffset > -(h / 4)) {
+                if (verticalOffset > -(MyApp.getWindowWidth() / 4)) {
                     rl.setVisibility(View.VISIBLE);
                     ll.setVisibility(View.VISIBLE);
                 }
@@ -170,20 +163,9 @@ public class HotSongMenuFragment extends BaseFragment {
         });
     }
 
-    public Bitmap changeBackgroundImage(Bitmap sentBitmap) {
-        if (Build.VERSION.SDK_INT > 16) {
-            Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
-            final RenderScript rs = RenderScript.create(context);
-            final Allocation input = Allocation.createFromBitmap(rs, sentBitmap, Allocation.MipmapControl.MIPMAP_NONE,
-                    Allocation.USAGE_SCRIPT);
-            final Allocation output = Allocation.createTyped(rs, input.getType());
-            final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-            script.setRadius(20.0f);
-            script.setInput(input);
-            script.forEach(output);
-            output.copyTo(bitmap);
-            return bitmap;
-        }
-        return null;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(mAdapter);
     }
 }

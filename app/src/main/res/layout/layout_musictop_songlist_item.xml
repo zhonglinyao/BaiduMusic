@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_musictop_songlist_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="5dp">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_musictop_songlist_item"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="5dp"/>
+        <ImageView
+            android:id="@+id/iv_srcimg_musictop_songlist_item"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <TextView
+            android:id="@+id/tv_ranking_musictop_songlist_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:textColor="@android:color/white"/>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_name_musictop_songlist_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="aa"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:id="@+id/iv_mv_musictop_songlist_item"
+            android:layout_width="25dp"
+            android:layout_height="15dp"
+            android:layout_alignBottom="@id/tv_name_musictop_songlist_item"
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/tv_name_musictop_songlist_item"/>
+
+        <TextView
+            android:id="@+id/tv_author_musictop_songlist_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name_musictop_songlist_item"
+            android:text="aa"
+            android:textSize="15sp"/>
+
+        <ImageView
+            android:id="@+id/iv_sq_musictop_songlist_item"
+            android:layout_width="25dp"
+            android:layout_height="15dp"
+            android:layout_alignBottom="@id/tv_author_musictop_songlist_item"
+            android:layout_gravity="center"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/tv_author_musictop_songlist_item"/>
+
+        <ImageView
+            android:id="@+id/iv_more_musictop_songlist_item"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_ressong_more"/>
+
+        <ImageView
+            android:id="@+id/iv_singing_musictop_songlist_item"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/iv_more_musictop_songlist_item"/>
+    </RelativeLayout>
+
+</LinearLayout>

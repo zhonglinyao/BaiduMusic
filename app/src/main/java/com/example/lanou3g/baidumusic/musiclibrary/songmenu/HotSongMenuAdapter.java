@@ -1,17 +1,24 @@
-package com.example.lanou3g.baidumusic.musiclibrary.recommend;
+package com.example.lanou3g.baidumusic.musiclibrary.songmenu;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.lanou3g.baidumusic.MyApp;
 import com.example.lanou3g.baidumusic.R;
+import com.example.lanou3g.baidumusic.main.PlaySongBean;
+import com.example.lanou3g.baidumusic.main.PlaySongMenuEvent;
+import com.example.lanou3g.baidumusic.main.Player;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -24,6 +31,8 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int FOOTER_VIEW = -1;
     private static final int HEAD_VIEW = -2;
     private String text;
+    private PlaySongBean mPlaySongBean;
+    private Player mPlayer;
 
     public void setText(String text) {
         this.text = text;
@@ -35,6 +44,9 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public HotSongMenuAdapter(Context context) {
         this.context = context;
+        EventBus.getDefault().register(this);
+        mPlayer = Player.getmPlayer();
+        mPlaySongBean = mPlayer.getPlaySongBean();
     }
 
     @Override
@@ -46,7 +58,6 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             return position;
         }
-
     }
 
     @Override
@@ -55,11 +66,7 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             View view = LayoutInflater.from(context).inflate(R.layout.layout_footerview_null, parent, false);
             View v = view.findViewById(R.id.footerView);
             ViewGroup.LayoutParams params = v.getLayoutParams();
-            WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-            DisplayMetrics metrics = new DisplayMetrics();
-            manager.getDefaultDisplay().getMetrics(metrics);
-            int h = metrics.heightPixels;
-            params.height = (int) (h / 13);
+            params.height = (int) (MyApp.getWindowHeight() / 13);
             v.setLayoutParams(params);
             BottomViewHolder bottomViewHolder = new BottomViewHolder(view);
             return bottomViewHolder;
@@ -76,25 +83,39 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position < contentBeen.size() + 1 && position > 0) {
-            position = position - 1;
-            ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.tv_name.setText(contentBeen.get(position).getTitle());
-            viewHolder.tv_author.setText(contentBeen.get(position).getAuthor());
-            if (1 == contentBeen.get(position).getHas_mv()) {
+        if (position <= contentBeen.size() && position > 0) {
+            final int item = position - 1;
+            final ViewHolder viewHolder = (ViewHolder) holder;
+            if (mPlaySongBean != null) {
+                if (mPlaySongBean.getSonginfo().getSong_id().equals(contentBeen.get(item).getSong_id())) {
+                    viewHolder.tv_name.setTextColor(context.getResources().getColor(R.color.colorMain));
+                    viewHolder.tv_author.setTextColor(context.getResources().getColor(R.color.colorMain));
+                } else {
+                    viewHolder.tv_name.setTextColor(Color.BLACK);
+                    viewHolder.tv_author.setTextColor(context.getResources().getColor(R.color.colorLine));
+                }
+            }
+            viewHolder.tv_name.setText(contentBeen.get(item).getTitle());
+            viewHolder.tv_author.setText(contentBeen.get(item).getAuthor());
+            if (1 == contentBeen.get(item).getHas_mv()) {
                 viewHolder.iv_mv.setImageResource(R.mipmap.ic_mv);
             }
-            if (1 == contentBeen.get(position).getIs_ksong()) {
+            if (1 == contentBeen.get(item).getIs_ksong()) {
                 viewHolder.iv_singing.setImageResource(R.mipmap.ic_mike_normal);
             }
-            if (2 == contentBeen.get(position).getHavehigh()) {
-                viewHolder.iv_sq.setImageResource(R.mipmap.ic_sq);
-            }
-        }else if (0 == position){
+            viewHolder.Rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PlaySongMenuEvent playSongMenuEvent = new PlaySongMenuEvent();
+                    playSongMenuEvent.setItem(item);
+                    playSongMenuEvent.setContentBeen(contentBeen);
+                    EventBus.getDefault().post(playSongMenuEvent);
+                }
+            });
+        } else if (0 == position) {
             HeadViewHolder headViewHolder = (HeadViewHolder) holder;
             headViewHolder.tv_head.setText(text);
         }
-
     }
 
     @Override
@@ -102,13 +123,20 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return contentBeen == null ? 0 : contentBeen.size() + 2;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getPlaySongInfo(PlaySongBean playSongBean) {
+        mPlaySongBean = playSongBean;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tv_name;
         private final TextView tv_author;
         private final ImageView iv_mv;
         private final ImageView iv_sq;
-        private final ImageButton iv_more;
+        private final ImageView iv_more;
         private final ImageView iv_singing;
+        private final RelativeLayout Rl;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -116,8 +144,9 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tv_author = (TextView) itemView.findViewById(R.id.tv_author_hot_songmenu);
             iv_mv = (ImageView) itemView.findViewById(R.id.iv_mv_hot_songmenu);
             iv_sq = (ImageView) itemView.findViewById(R.id.iv_sq_hot_songmenu);
-            iv_more = (ImageButton) itemView.findViewById(R.id.iv_more_hot_songmenu);
+            iv_more = (ImageView) itemView.findViewById(R.id.iv_more_hot_songmenu);
             iv_singing = (ImageView) itemView.findViewById(R.id.iv_singing_songmenu);
+            Rl = (RelativeLayout) itemView.findViewById(R.id.rl_hot_songmenu_item);
 
         }
     }
@@ -128,7 +157,7 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    class HeadViewHolder extends RecyclerView.ViewHolder{
+    class HeadViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tv_head;
 

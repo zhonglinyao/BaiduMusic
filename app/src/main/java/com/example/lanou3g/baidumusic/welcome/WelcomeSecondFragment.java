@@ -1,10 +1,16 @@
 package com.example.lanou3g.baidumusic.welcome;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
-import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.lanou3g.baidumusic.MyApp;
 import com.example.lanou3g.baidumusic.R;
+import com.example.lanou3g.baidumusic.Tools;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.main.MainActivity;
 
@@ -13,7 +19,8 @@ import com.example.lanou3g.baidumusic.main.MainActivity;
  */
 public class WelcomeSecondFragment extends BaseFragment{
 
-    private Button button;
+    private TextView mTextView;
+    private RelativeLayout mRl;
 
     @Override
     protected int setLayout() {
@@ -22,12 +29,20 @@ public class WelcomeSecondFragment extends BaseFragment{
 
     @Override
     protected void initView() {
-        button = bindView(R.id.btn_welcome);
+        mTextView = bindView(R.id.tv_welcome);
+        mRl = bindView(R.id.rl_welcome_second);
     }
 
     @Override
     protected void initData() {
-        button.setOnClickListener(new View.OnClickListener() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.mipmap.welcome_5820_2, options);
+        options.inSampleSize = Tools.calculateInSampleSize(options, MyApp.getWindowWidth(), MyApp.getWindowHeight());
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.welcome_5820_2, options);
+        mRl.setBackground(new BitmapDrawable(getResources(), bitmap));
+        mTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), MainActivity.class));

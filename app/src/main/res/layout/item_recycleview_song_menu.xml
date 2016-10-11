@@ -17,25 +17,35 @@
 
             <ImageView
                 android:id="@+id/iv_play_recycleview_songmenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom|right"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:scaleType="fitCenter"
-                android:background="@drawable/play_song_menu_select" />
+                android:src="@drawable/play_song_menu_select" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@mipmap/ic_listen_count"/>
             <TextView
                 android:id="@+id/tv_listener_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/ic_listen_count"
-                android:drawablePadding="5dp"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:textColor="#FFFFFF"
-                android:layout_gravity="bottom|left"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp" />
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#FFFFFF"/>
+            </LinearLayout>
         </FrameLayout>
 
         <TextView

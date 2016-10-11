@@ -1,46 +1,36 @@
 package com.example.lanou3g.baidumusic.musiclibrary.songmenu;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.lanou3g.baidumusic.GsonRequest;
-import com.example.lanou3g.baidumusic.MyApp;
 import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.URLVlaues;
 import com.example.lanou3g.baidumusic.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
-import com.example.lanou3g.baidumusic.main.PlaySongService;
-import com.example.lanou3g.baidumusic.musiclibrary.recommend.HotSongMenuBean;
-import com.example.lanou3g.baidumusic.musiclibrary.recommend.HotSongMenuFragment;
+import com.example.lanou3g.baidumusic.main.PlaySongMenuEvent;
 import com.example.lanou3g.baidumusic.musiclibrary.recommend.SongMenuListener;
 
-import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 /**
  * Created by dllo on 16/9/19.
  */
-public class SongMenuFragment extends BaseFragment{
+public class SongMenuFragment extends BaseFragment {
 
     private RecyclerView rv;
     private TextView tv_now;
     private TextView tv_hot;
-    private PlaySongService.PlaySongBinder mBinder;
-    private PlaySongConnection mPlaySongConnection;
-    private Intent mIntent;
+    private PlaySongMenuEvent mPlaySongMenuEvent;
 
     @Override
     protected int setLayout() {
@@ -58,11 +48,8 @@ public class SongMenuFragment extends BaseFragment{
 
     @Override
     protected void initData() {
-        mIntent = new Intent(MyApp.getmContext(), PlaySongService.class);
-        mPlaySongConnection = new PlaySongConnection();
-        context.bindService(mIntent, mPlaySongConnection, Context.BIND_AUTO_CREATE);
         final SongMenuAdapter adapter = new SongMenuAdapter(context);
-        final GridLayoutManager manager = new GridLayoutManager(context,2);
+        final GridLayoutManager manager = new GridLayoutManager(context, 2);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
         rv.setAdapter(adapter);
@@ -73,10 +60,11 @@ public class SongMenuFragment extends BaseFragment{
 
                 }
             };
+
             @Override
             public void callBack(String list_id) {
                 GsonRequest<HotSongMenuBean> hotSongMenuBeanGsonRequest =
-                        new GsonRequest<HotSongMenuBean>(
+                        new GsonRequest<>(
                                 URLVlaues.getHotSongMenu(list_id),
                                 HotSongMenuBean.class,
                                 new Response.Listener<HotSongMenuBean>() {
@@ -97,21 +85,20 @@ public class SongMenuFragment extends BaseFragment{
 
             @Override
             public void playCallBack(String list_id) {
-                Log.d("SongMenuFragment", URLVlaues.getHotSongMenu(list_id));
                 GsonRequest<HotSongMenuBean> hotSongMenuBeanGsonRequest =
-                        new GsonRequest<HotSongMenuBean>(
+                        new GsonRequest<>(
                                 URLVlaues.getHotSongMenu(list_id),
                                 HotSongMenuBean.class,
                                 new Response.Listener<HotSongMenuBean>() {
+
                                     @Override
                                     public void onResponse(HotSongMenuBean response) {
-                                        List<HotSongMenuBean.ContentBean> contentBeen = response.getContent();
-                                        ArrayList<String> strings = new ArrayList<>();
-                                        for (int i = 0; i < contentBeen.size(); i++) {
-                                            Log.d("SongMenuFragment", contentBeen.get(i).getSong_id());
-                                            strings.add(contentBeen.get(i).getSong_id());
+                                        if (mPlaySongMenuEvent == null) {
+                                            mPlaySongMenuEvent = new PlaySongMenuEvent();
                                         }
-                                        mBinder.playSongList(strings);
+                                        mPlaySongMenuEvent.setContentBeen(response.getContent());
+                                        mPlaySongMenuEvent.setItem(0);
+                                        EventBus.getDefault().post(mPlaySongMenuEvent);
                                     }
                                 },
                                 mErrorListener);
@@ -193,19 +180,6 @@ public class SongMenuFragment extends BaseFragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        context.unbindService(mPlaySongConnection);
     }
 
-    class PlaySongConnection implements ServiceConnection {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mBinder = (PlaySongService.PlaySongBinder) service;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    }
 }

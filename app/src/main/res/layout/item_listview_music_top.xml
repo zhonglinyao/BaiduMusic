@@ -15,9 +15,10 @@
             android:id="@+id/img_listview_music_top"
             android:layout_width="90dp"
             android:layout_height="90dp" />
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/iv_playAll_music_top"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/play_song_menu_select"
             android:layout_gravity="bottom|right"
             android:layout_margin="5dp"/>
@@ -35,7 +36,6 @@
             android:id="@+id/tv_listview_name_music_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="新歌榜"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -48,7 +48,6 @@
             android:ellipsize="end"
             android:maxEms="15"
             android:maxLines="1"
-            android:text="来日方长"
             android:textSize="10sp" />
 
         <TextView
@@ -59,7 +58,6 @@
             android:ellipsize="end"
             android:maxEms="15"
             android:maxLines="1"
-            android:text="来日方长"
             android:textSize="10sp" />
 
         <TextView
@@ -70,17 +68,16 @@
             android:ellipsize="end"
             android:maxEms="15"
             android:maxLines="1"
-            android:text="来日方长"
             android:textSize="10sp" />
     </LinearLayout>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_listView_music_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
-        android:background="@mipmap/ic_songlist_detail_nor" />
+        android:src="@mipmap/ic_songlist_detail_nor" />
 
 </RelativeLayout>

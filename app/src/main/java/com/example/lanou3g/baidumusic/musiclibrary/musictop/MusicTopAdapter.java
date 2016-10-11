@@ -1,19 +1,19 @@
 package com.example.lanou3g.baidumusic.musiclibrary.musictop;
 
 import android.content.Context;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lanou3g.baidumusic.MyApp;
 import com.example.lanou3g.baidumusic.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.example.lanou3g.baidumusic.main.ImageLoderSetting;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,11 @@ import java.util.ArrayList;
 public class MusicTopAdapter extends BaseAdapter{
     private Context context;
     private ArrayList<MusicTopBean.TopNameBean> list = new ArrayList<>();
-    private final DisplayImageOptions options;
+    private MusicTopListener mMusicTopListener;
+
+    public void setMusicTopListener(MusicTopListener musicTopListener) {
+        mMusicTopListener = musicTopListener;
+    }
 
     public void setList(ArrayList<MusicTopBean.TopNameBean> list) {
         this.list = list;
@@ -31,14 +35,6 @@ public class MusicTopAdapter extends BaseAdapter{
 
     public MusicTopAdapter(Context context) {
         this.context = context;
-        options = new DisplayImageOptions
-               .Builder()
-               .showImageForEmptyUri(R.mipmap.default_detail)
-               .showImageOnLoading(R.mipmap.default_detail)
-               .cacheInMemory(true)
-               .cacheOnDisk(true)
-               .considerExifParams(true)
-               .build();
     }
 
     @Override
@@ -57,7 +53,7 @@ public class MusicTopAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.item_listview_music_top, null);
@@ -66,7 +62,7 @@ public class MusicTopAdapter extends BaseAdapter{
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        ImageLoader.getInstance().displayImage(list.get(position).getPic_s192(), viewHolder.imageView, options);
+        ImageLoader.getInstance().displayImage(list.get(position).getPic_s192(), viewHolder.imageView, ImageLoderSetting.getOptions());
         viewHolder.tv_name.setText(list.get(position).getName());
         viewHolder.tv_first.setText(list.get(position).getContent().get(0).getTitle() + "-" +
                 list.get(position).getContent().get(0).getAuthor());
@@ -74,6 +70,19 @@ public class MusicTopAdapter extends BaseAdapter{
                 list.get(position).getContent().get(1).getAuthor());
         viewHolder.tv_third.setText(list.get(position).getContent().get(2).getTitle() + "-" +
                 list.get(position).getContent().get(2).getAuthor());
+        viewHolder.iv_playAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(list.get(position));
+                mMusicTopListener.playAllListener(list.get(position));
+            }
+        });
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMusicTopListener.jumpListener(list.get(position));
+            }
+        });
         return convertView;
     }
 
@@ -84,7 +93,7 @@ public class MusicTopAdapter extends BaseAdapter{
         private final TextView tv_first;
         private final TextView tv_second;
         private final TextView tv_third;
-        private final ImageButton imageButton;
+        private final ImageView iv_playAll;
 
         public ViewHolder(View convertView) {
             imageView = (ImageView) convertView.findViewById(R.id.img_listview_music_top);
@@ -92,14 +101,10 @@ public class MusicTopAdapter extends BaseAdapter{
             tv_first = (TextView) convertView.findViewById(R.id.tv_first_listview_music_top);
             tv_second = (TextView) convertView.findViewById(R.id.tv_second_listview_music_top);
             tv_third = (TextView) convertView.findViewById(R.id.tv_third_listview_music_top);
-            imageButton = (ImageButton) convertView.findViewById(R.id.btn_listView_music_top);
+            iv_playAll = (ImageView) convertView.findViewById(R.id.iv_playAll_music_top);
             ViewGroup.LayoutParams params = imageView.getLayoutParams();
-            WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-            DisplayMetrics metrics = new DisplayMetrics();
-            manager.getDefaultDisplay().getMetrics(metrics);
-            int width = metrics.widthPixels;
-            params.width = (int) (width / 4);
-            params.height = (int) (width / 4);
+            params.width = (int) (MyApp.getWindowWidth() / 4);
+            params.height = (int) (MyApp.getWindowWidth() / 4);
             imageView.setLayoutParams(params);
         }
     }
