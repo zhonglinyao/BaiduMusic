@@ -51,5 +51,9 @@ public class PlaySongService extends Service {
         public void play(PlaySongBean playSongBean){
             mPlayer.playURL(playSongBean);
         }
+
+        public void playTo(int progress) {
+            mPlayer.seekTo(progress);
+        }
     }
 }

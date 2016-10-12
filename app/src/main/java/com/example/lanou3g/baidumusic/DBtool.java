@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.example.lanou3g.baidumusic.main.MainSongListBean;
+import com.example.lanou3g.baidumusic.main.PlaySongListEvent;
 import com.litesuits.orm.LiteOrm;
 
 import java.util.ArrayList;
@@ -34,19 +35,29 @@ public class DBtool {
         mHandler = new Handler(Looper.getMainLooper());
     }
 
-    public void insertSongList(final MainSongListBean mainSongListBean){
+    public void insertPlaySongEvent(final PlaySongListEvent playSongListEvent){
         ThreadTool.getInstance().getThreadPoolExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                mLiteOrm.insert(mainSongListBean);
+                mLiteOrm.insert(playSongListEvent);
             }
         });
     }
-    public void insertSongList(final List<MainSongListBean> songListBeen){
+
+    public void deletePlaySongEvent(){
         ThreadTool.getInstance().getThreadPoolExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                mLiteOrm.insert(songListBeen);
+                mLiteOrm.delete(PlaySongListEvent.class);
+            }
+        });
+    }
+
+    public void updatePlaySongEvent(final PlaySongListEvent playSongListEvent){
+        ThreadTool.getInstance().getThreadPoolExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                mLiteOrm.update(playSongListEvent);
             }
         });
     }
@@ -57,6 +68,16 @@ public class DBtool {
             public void run() {
                 ArrayList<MainSongListBean> songListBeen = mLiteOrm.query(MainSongListBean.class);
                 mHandler.post(new HandlerRunnable<MainSongListBean>(songListBeen, queryListener));
+            }
+        });
+    }
+
+    public void queryPlaySongEvent(final QueryListener<PlaySongListEvent> queryListener){
+        ThreadTool.getInstance().getThreadPoolExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<PlaySongListEvent> playSongListEvents = mLiteOrm.query(PlaySongListEvent.class);
+                mHandler.post(new HandlerRunnable<>(playSongListEvents, queryListener));
             }
         });
     }

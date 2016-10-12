@@ -41,7 +41,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -106,7 +105,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initData() {
-
+//        SharedPreferences preferences = getSharedPreferences("welcome",MODE_PRIVATE);
+//        final SharedPreferences.Editor editor = preferences.edit();
+//        if (!preferences.getBoolean("one", true)){
+//            DBtool.getmDBtools().queryPlaySongEvent(new DBtool.QueryListener<PlaySongListEvent>() {
+//                @Override
+//                public void onQuert(List<PlaySongListEvent> list) {
+//                    item = list.get(list.size() - 1).getItem();
+//                    mMainSongListBeen.addAll(list.get(list.size() - 1).getSongListBeen());
+//                    PlaySongGsonRequest<PlaySongBean> gsonRequest =
+//                            new PlaySongGsonRequest<>(
+//                                    URLVlaues.getPlaySong(mMainSongListBeen.get(item).getSong_id()),
+//                                    PlaySongBean.class,
+//                                    new Response.Listener<PlaySongBean>() {
+//                                        @Override
+//                                        public void onResponse(PlaySongBean response) {
+//                                            mPlaySongBean = response;
+//                                            updatePlaySongInfo();
+//                                        }
+//                                    },
+//                                    new Response.ErrorListener() {
+//                                        @Override
+//                                        public void onErrorResponse(VolleyError error) {
+//
+//                                        }
+//                                    });
+//                    VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
+//                }
+//            });
+//        } else {
+//            editor.putBoolean("one", false);
+//        }
         ArrayList<String> strings = new ArrayList<>();
         strings.add(StringVlaues.FRAGMENT_MINE);
         strings.add(StringVlaues.FRAGMENT_MUSIC);
@@ -150,14 +179,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.iv_play_main:
                 if (mIsPlaying) {
-                    mBinder.playPause();
+                    if (mPlaySongBean != null) {
+                        mBinder.playPause();
+                    }
                 } else {
-                    mBinder.playStart();
+                    if (mPlaySongBean != null) {
+                        mBinder.playStart();
+                    }
                 }
                 break;
             case R.id.iv_next_main:
-                item++;
-                playingSong();
+                playNext();
                 break;
             case R.id.iv_song_list_main:
                 if (!listShowing) {
@@ -188,13 +220,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     PlayingSongListener mPlayingSongListener = new PlayingSongListener() {
         @Override
         public void isPlay(Boolean isPlaying) {
+            mBinder.playPause();
             if (isPlaying) {
                 mBinder.playPause();
             } else {
                 mBinder.playStart();
             }
         }
-
         @Override
         public void playingNext() {
             playNext();
@@ -203,6 +235,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void playingPrev() {
             playPrev();
+        }
+
+        @Override
+        public void seekTo(int progress) {
+            mBinder.playTo(progress);
         }
     };
 
@@ -213,10 +250,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
         @Override
-        public void playItem(List<MainSongListBean> mainSongListBeen, int position) {
-            mMainSongListBeen = (ArrayList<MainSongListBean>) mainSongListBeen;
+        public void playItem(int position) {
             item = position;
             playingSong();
+            updateLite();
         }
     };
 
@@ -227,7 +264,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (isShow) {
-            mSonglistFragment.setSongList(mShowSongListListener);
+            mSonglistFragment.setSongListListener(mShowSongListListener);
             mSonglistFragment.setSongListBeen(mMainSongListBeen);
             mSonglistFragment.setPlaySongBean(mPlaySongBean);
             transaction.setCustomAnimations(R.anim.fragment_songlist_slide_in, R.anim.anim_null);
@@ -237,13 +274,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             transaction.remove(mSonglistFragment);
         }
         transaction.commit();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-        unbindService(mConnection);
     }
 
     public void updatePlaySongInfo() {
@@ -272,8 +302,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getplayNext(Integer i) {
-        Boolean b = false;
-        EventBus.getDefault().post(b);
         if (i == StringVlaues.PLAY_NEXT) {
             playNext();
         }
@@ -283,25 +311,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void playNext() {
+        mBinder.playPause();
         item++;
         if (item >= mMainSongListBeen.size()) {
             return;
         } else {
             playingSong();
         }
+        updateLite();
     }
 
     public void playPrev() {
+        mBinder.playPause();
         item--;
         if (item < 0) {
             return;
         } else {
             playingSong();
         }
+        updateLite();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getPlaySongMenu(PlaySongMenuEvent playSongMenuEvent) {
+    public void getDeleteSongListEvent(PlaySongListEvent playSongListEvent) {
+        item = playSongListEvent.getItem();
+        mMainSongListBeen.clear();
+        mMainSongListBeen.addAll(playSongListEvent.getSongListBeen());
+        updateLite();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getPlaySongMenuEvent(PlaySongMenuEvent playSongMenuEvent) {
         Log.d("MainActivity", "aa");
         item = playSongMenuEvent.getItem();
         mMainSongListBeen.clear();
@@ -313,6 +353,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mMainSongListBeen.add(songListBean);
         }
         playingSong();
+        updateLite();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -328,6 +369,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mMainSongListBeen.add(songListBean);
         }
         playingSong();
+        updateLite();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -345,9 +387,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    public void updateLite(){
+//        PlaySongListEvent mPlaySongListEvent = new PlaySongListEvent();
+//        mPlaySongListEvent.setItem(item);
+//        mPlaySongListEvent.setSongListBeen(mMainSongListBeen);
+//        DBtool.getmDBtools().insertPlaySongEvent(mPlaySongListEvent);
+    }
+
     public void playingSong() {
         PlaySongGsonRequest<PlaySongBean> playSongGsonRequest =
-                new PlaySongGsonRequest<PlaySongBean>(
+                new PlaySongGsonRequest<>(
                         URLVlaues.getPlaySong(mMainSongListBeen.get(item).getSong_id()),
                         PlaySongBean.class,
                         new Response.Listener<PlaySongBean>() {
@@ -359,6 +408,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                         mPlaySongBean = response;
                                         updatePlaySongInfo();
                                         EventBus.getDefault().post(response);
+
                                     }
                                 } catch (Exception e) {
                                     playNext();
@@ -368,10 +418,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-
+                                mBinder.playPause();
                             }
                         });
         VolleyRequestQueue.getVolleyRequestQueue().addRequest(playSongGsonRequest);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("MainActivity", "zzz");
+        EventBus.getDefault().unregister(this);
+        unbindService(mConnection);
     }
 
     class PlaySongConnection implements ServiceConnection {

@@ -7,4 +7,5 @@ public interface PlayingSongListener {
     void isPlay(Boolean isPlaying);
     void playingNext();
     void playingPrev();
+    void seekTo(int progress);
 }

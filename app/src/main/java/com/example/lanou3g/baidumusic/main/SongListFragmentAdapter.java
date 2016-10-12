@@ -25,6 +25,7 @@ public class SongListFragmentAdapter extends BaseAdapter {
     private Context mContext;
     private List<MainSongListBean> mSongListBeen;
     private PlaySongBean mPlaySongBean;
+    private PlaySongListEvent mPlaySongListEvent;
 
     public void setSongListBeen(List<MainSongListBean> songListBeen) {
         mSongListBeen.clear();
@@ -42,7 +43,7 @@ public class SongListFragmentAdapter extends BaseAdapter {
 
     public SongListFragmentAdapter(Context context) {
         mContext = context;
-        if (mSongListBeen == null){
+        if (mSongListBeen == null) {
             mSongListBeen = new ArrayList<>();
         }
         EventBus.getDefault().register(this);
@@ -96,6 +97,16 @@ public class SongListFragmentAdapter extends BaseAdapter {
     private void delete(int position) {
         mSongListBeen.remove(position);
         notifyDataSetChanged();
+        if (mPlaySongListEvent == null) {
+            mPlaySongListEvent = new PlaySongListEvent();
+        }
+        for (int i = 0; i < mSongListBeen.size(); i++) {
+            if (mSongListBeen.get(i).getSong_id() == mPlaySongBean.getSonginfo().getSong_id()){
+                mPlaySongListEvent.setItem(i);
+            }
+        }
+        mPlaySongListEvent.setSongListBeen(mSongListBeen);
+        EventBus.getDefault().post(mPlaySongListEvent);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.Tools;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -67,10 +68,11 @@ public class FragmentPlaySongSecond extends BaseFragment {
     public void update() {
         if (mPlaySongBean != null && mPlaySongBean.getSonginfo() != null) {
             if (mPlaySongBean.getSonginfo().getPic_huge() != null) {
-                ImageLoader.getInstance().loadImage(mPlaySongBean.getSonginfo().getPic_huge(), ImageLoderSetting.getOptions(), new SimpleImageLoadingListener() {
+                ImageLoader.getInstance().loadImage(mPlaySongBean.getSonginfo().getPic_big(), ImageLoderSetting.getOptions(), new SimpleImageLoadingListener() {
+
                     @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                        super.onLoadingCancelled(imageUri, view);
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        super.onLoadingFailed(imageUri, view, failReason);
                     }
 
                     @Override

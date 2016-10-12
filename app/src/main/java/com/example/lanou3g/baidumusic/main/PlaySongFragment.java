@@ -112,7 +112,7 @@ public class PlaySongFragment extends BaseFragment implements View.OnClickListen
         mSb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                mPlayingSongListener.seekTo(songTime * progress / seekBar.getMax());
             }
 
             @Override
@@ -153,27 +153,26 @@ public class PlaySongFragment extends BaseFragment implements View.OnClickListen
                 mPlayingSongListener.isPlay(isPlaying);
                 break;
             case R.id.iv_playsong_next:
-                init();
                 mPlayingSongListener.playingNext();
                 break;
             case R.id.iv_playsong_prev:
-                init();
                 mPlayingSongListener.playingPrev();
                 break;
         }
     }
 
     public void update() {
-//        mTv_pastTime.setText(Tools.getFormatedDateTime(mPlayer.getCurrentPosition()));
-//        mSb.setProgress(mSb.getMax() * mPlayer.getCurrentPosition() / mPlayer.getDuration());
+        mTv_pastTime.setText(Tools.getFormatedDateTime(pastTime));
+        mTv_songTime.setText(Tools.getFormatedDateTime(songTime));
+        mSb.setProgress(mSb.getMax() * pastTime / songTime);
     }
 
-    public void init() {
-        mTv_songTime.setText(Tools.getFormatedDateTime(0));
-        mTv_pastTime.setText(Tools.getFormatedDateTime(0));
-        mSb.setProgress(0);
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getTime(SongTimeEvent songTimeEvent){
+        pastTime = songTimeEvent.getPastTime();
+        songTime = songTimeEvent.getSongTime();
+        update();
     }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isPlaying(Boolean playing) {
         if (playing) {

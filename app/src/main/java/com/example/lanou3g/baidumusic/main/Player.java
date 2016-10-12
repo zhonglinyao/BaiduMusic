@@ -2,6 +2,9 @@ package com.example.lanou3g.baidumusic.main;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.util.Log;
+
+import com.example.lanou3g.baidumusic.ThreadTool;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -16,11 +19,12 @@ public class Player implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErr
     private static MediaPlayer mMediaPlayer;
     private PlaySongBean mPlaySongBean;
     private Boolean isPlaying = false;
+    private SongTimeEvent mSongTimeEvent = new SongTimeEvent();
 
     public static Player getmPlayer() {
-        if (mPlayer == null ){
-            synchronized (Player.class){
-                if (mPlayer == null){
+        if (mPlayer == null) {
+            synchronized (Player.class) {
+                if (mPlayer == null) {
                     mPlayer = new Player();
                 }
             }
@@ -37,7 +41,7 @@ public class Player implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErr
     }
 
     private Player() {
-        if (mMediaPlayer == null){
+        if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
         }
         mMediaPlayer.setOnCompletionListener(this);
@@ -45,7 +49,7 @@ public class Player implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErr
         mMediaPlayer.setOnPreparedListener(this);
     }
 
-    public void playURL(PlaySongBean playSongBean){
+    public void playURL(PlaySongBean playSongBean) {
         mPlaySongBean = playSongBean;
         try {
             mMediaPlayer.reset();
@@ -56,10 +60,11 @@ public class Player implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErr
         }
     }
 
-    public void playStart(){
+    public void playStart() {
         isPlaying = true;
         EventBus.getDefault().post(isPlaying);
         mMediaPlayer.start();
+        ThreadTool.getInstance().getThreadPoolExecutor().execute(mRunnable);
     }
 
     public void playPause() {
@@ -76,23 +81,32 @@ public class Player implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErr
         }
     }
 
-    public int getDuration(){
-        return mMediaPlayer.getDuration();
-    }
-
-    public int getCurrentPosition(){
-        return mMediaPlayer.getCurrentPosition();
-    }
-
-    public void seekTo(int ms){
+    public void seekTo(int ms) {
         mMediaPlayer.seekTo(ms);
     }
+
+    Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            while (isPlaying) {
+                mSongTimeEvent.setPastTime(mMediaPlayer.getCurrentPosition());
+                mSongTimeEvent.setSongTime(mMediaPlayer.getDuration());
+                EventBus.getDefault().post(mSongTimeEvent);
+                try {
+                    Thread.sleep(400);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     @Override
     public void onPrepared(MediaPlayer mp) {
         isPlaying = true;
         EventBus.getDefault().post(isPlaying);
         mp.start();
+        ThreadTool.getInstance().getThreadPoolExecutor().execute(mRunnable);
     }
 
     @Override
@@ -102,6 +116,8 @@ public class Player implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErr
 
     @Override
     public void onCompletion(MediaPlayer mp) {
+        Log.d("Player", "qq");
+        playPause();
         EventBus.getDefault().post(StringVlaues.PLAY_NEXT);
     }
 }

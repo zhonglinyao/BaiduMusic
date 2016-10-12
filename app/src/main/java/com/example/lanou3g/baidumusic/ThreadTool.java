@@ -1,6 +1,6 @@
 package com.example.lanou3g.baidumusic;
 
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +30,6 @@ public class ThreadTool {
         int CUPCore = Runtime.getRuntime().availableProcessors();
         mThreadPoolExecutor = new ThreadPoolExecutor(CUPCore + 1,
                 CUPCore * 2 + 1, 60l, TimeUnit.SECONDS,
-                new LinkedBlockingDeque<Runnable>());
+                new LinkedBlockingQueue<Runnable>());
     }
 }

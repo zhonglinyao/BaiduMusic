@@ -21,12 +21,15 @@ public class WelcomeActivity extends BaseActivity{
     @Override
     protected int setLayout() {
         SharedPreferences preferences = getSharedPreferences("welcome",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
         if (preferences.getBoolean("is",false)){
+            editor.putBoolean("one", false);
+            editor.commit();
             startActivity(new Intent(this, MainActivity.class));
             finish();
         } else {
-            SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("is", true);
+            editor.putBoolean("one", true);
             editor.commit();
         }
         return R.layout.activity_welcome;

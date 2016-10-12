@@ -23,7 +23,7 @@ public class SonglistFragment extends BaseFragment {
 
     private LinearLayout mLl_back;
     private ListView mLv;
-    private ShowSongListListener mSongList;
+    private ShowSongListListener mSongListListener;
     private List<MainSongListBean> mSongListBeen;
     private SongListFragmentAdapter mAdapter;
     private PlaySongBean mPlaySongBean;
@@ -36,10 +36,9 @@ public class SonglistFragment extends BaseFragment {
         mSongListBeen = songListBeen;
     }
 
-    public void setSongList(ShowSongListListener songList) {
-        mSongList = songList;
+    public void setSongListListener(ShowSongListListener songListListener) {
+        mSongListListener = songListListener;
     }
-
 
     @Override
     protected int setLayout() {
@@ -57,7 +56,6 @@ public class SonglistFragment extends BaseFragment {
                 transaction.setCustomAnimations(R.anim.anim_null, R.anim.fragment_songlist_slide_out);
                 transaction.remove(SonglistFragment.this);
                 transaction.commit();
-                mSongList.showBackListener(false);
             }
         });
         mLv = bindView(R.id.lv_songlist_main);
@@ -79,9 +77,7 @@ public class SonglistFragment extends BaseFragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mSongListBeen.clear();
-                mSongListBeen.addAll(mAdapter.getSongListBeen());
-                mSongList.playItem(mSongListBeen, position);
+                mSongListListener.playItem(position);
             }
         });
     }
@@ -89,6 +85,7 @@ public class SonglistFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mSongListListener.showBackListener(false);
         EventBus.getDefault().unregister(mAdapter);
     }
 }

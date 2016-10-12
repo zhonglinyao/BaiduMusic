@@ -29,7 +29,7 @@ public class Tools {
     }
 
     public static Bitmap changeBackgroundImage(Bitmap sentBitmap, float radius) {
-        if (Build.VERSION.SDK_INT > 16) {
+        if (Build.VERSION.SDK_INT > 16 && sentBitmap != null) {
             Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
             final RenderScript rs = RenderScript.create(MyApp.getmContext());
             final Allocation input = Allocation.createFromBitmap(rs, sentBitmap, Allocation.MipmapControl.MIPMAP_NONE,
