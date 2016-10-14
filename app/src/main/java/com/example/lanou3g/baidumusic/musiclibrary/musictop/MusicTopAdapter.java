@@ -8,9 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.lanou3g.baidumusic.MyApp;
+import com.example.lanou3g.baidumusic.bean.MusicTopBean;
+import com.example.lanou3g.baidumusic.main.MyApp;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.main.ImageLoderSetting;
+import com.example.lanou3g.baidumusic.tools.ImageLoderSetting;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.greenrobot.eventbus.EventBus;

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lanou3g.baidumusic.R;
+import com.example.lanou3g.baidumusic.bean.SongMenuBean;
 import com.example.lanou3g.baidumusic.musiclibrary.recommend.SongMenuListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

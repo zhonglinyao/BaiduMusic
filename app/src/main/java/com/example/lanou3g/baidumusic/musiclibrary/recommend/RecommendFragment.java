@@ -11,13 +11,16 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.lanou3g.baidumusic.GsonRequest;
+import com.example.lanou3g.baidumusic.bean.RecommendBean;
+import com.example.lanou3g.baidumusic.musiclibrary.recommend.singersort.SingerSortFragment;
+import com.example.lanou3g.baidumusic.musiclibrary.recommend.songsort.SongSortFragment;
+import com.example.lanou3g.baidumusic.request.GsonRequest;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.URLVlaues;
-import com.example.lanou3g.baidumusic.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.values.URLVlaues;
+import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.MusicLibraryFragment;
-import com.example.lanou3g.baidumusic.musiclibrary.songmenu.HotSongMenuBean;
+import com.example.lanou3g.baidumusic.bean.HotSongMenuBean;
 import com.example.lanou3g.baidumusic.musiclibrary.songmenu.HotSongMenuFragment;
 
 import java.lang.ref.WeakReference;

@@ -5,9 +5,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.widget.LinearLayout;
 
-import com.example.lanou3g.baidumusic.MyApp;
+import com.example.lanou3g.baidumusic.main.MyApp;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.Tools;
+import com.example.lanou3g.baidumusic.tools.Tools;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 
 /**

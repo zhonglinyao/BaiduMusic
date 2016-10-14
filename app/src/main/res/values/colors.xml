@@ -8,5 +8,6 @@
     <color name="colorHotSongMenuLayoutPressed">#9F5F5F5F</color>
     <color name="colorHotSongMenuLayoutNor">#8F8F8F</color>
     <color name="colorLine">#909090</color>
+    <color name="colorItemClick">#20C0C0C0</color>
 
 </resources>

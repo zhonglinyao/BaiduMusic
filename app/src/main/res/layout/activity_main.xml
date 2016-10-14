@@ -26,7 +26,7 @@
                     android:id="@+id/rl_top"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="#10AFFF">
+                    android:background="@color/colorMain">
 
                     <ImageView
                         android:id="@+id/ib_more_main"

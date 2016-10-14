@@ -8,10 +8,11 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.lanou3g.baidumusic.GsonRequest;
+import com.example.lanou3g.baidumusic.bean.MVBean;
+import com.example.lanou3g.baidumusic.request.GsonRequest;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.URLVlaues;
-import com.example.lanou3g.baidumusic.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.values.URLVlaues;
+import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.recommend.RefreshListenerCallBack;
 

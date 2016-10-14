@@ -17,13 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.lanou3g.baidumusic.DividerItemDecoration;
-import com.example.lanou3g.baidumusic.MyApp;
+import com.example.lanou3g.baidumusic.bean.HotSongMenuBean;
+import com.example.lanou3g.baidumusic.bean.PlaySongMenuEvent;
+import com.example.lanou3g.baidumusic.tools.DividerItemDecoration;
+import com.example.lanou3g.baidumusic.main.MyApp;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.Tools;
+import com.example.lanou3g.baidumusic.tools.Tools;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
-import com.example.lanou3g.baidumusic.main.ImageLoderSetting;
-import com.example.lanou3g.baidumusic.main.PlaySongMenuEvent;
+import com.example.lanou3g.baidumusic.tools.ImageLoderSetting;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 

@@ -10,12 +10,14 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.lanou3g.baidumusic.GsonRequest;
+import com.example.lanou3g.baidumusic.bean.HotSongMenuBean;
+import com.example.lanou3g.baidumusic.bean.PlaySongMenuEvent;
+import com.example.lanou3g.baidumusic.bean.SongMenuBean;
+import com.example.lanou3g.baidumusic.request.GsonRequest;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.URLVlaues;
-import com.example.lanou3g.baidumusic.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.values.URLVlaues;
+import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
-import com.example.lanou3g.baidumusic.main.PlaySongMenuEvent;
 import com.example.lanou3g.baidumusic.musiclibrary.recommend.SongMenuListener;
 
 import org.greenrobot.eventbus.EventBus;

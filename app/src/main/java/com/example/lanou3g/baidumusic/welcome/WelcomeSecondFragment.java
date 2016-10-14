@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.lanou3g.baidumusic.MyApp;
+import com.example.lanou3g.baidumusic.main.MyApp;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.Tools;
+import com.example.lanou3g.baidumusic.tools.Tools;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.main.MainActivity;
 

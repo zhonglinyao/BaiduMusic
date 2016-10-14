@@ -10,11 +10,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.lanou3g.baidumusic.MyApp;
+import com.example.lanou3g.baidumusic.bean.HotSongMenuBean;
+import com.example.lanou3g.baidumusic.bean.PlaySongMenuEvent;
+import com.example.lanou3g.baidumusic.main.MyApp;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.main.PlaySongBean;
-import com.example.lanou3g.baidumusic.main.PlaySongMenuEvent;
-import com.example.lanou3g.baidumusic.main.Player;
+import com.example.lanou3g.baidumusic.bean.PlaySongBean;
+import com.example.lanou3g.baidumusic.main.playsong.Player;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -103,6 +104,7 @@ public class HotSongMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             if (1 == contentBeen.get(item).getIs_ksong()) {
                 viewHolder.iv_singing.setImageResource(R.mipmap.ic_mike_normal);
             }
+            viewHolder.Rl.setBackgroundResource(R.drawable.item_select);
             viewHolder.Rl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

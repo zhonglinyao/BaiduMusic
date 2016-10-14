@@ -1,11 +1,11 @@
 package com.example.lanou3g.baidumusic.main;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.IBinder;
 import android.support.design.widget.TabLayout;
@@ -13,27 +13,40 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.lanou3g.baidumusic.MyApp;
+import com.example.lanou3g.baidumusic.bean.MainSongListBean;
+import com.example.lanou3g.baidumusic.bean.PlaySongBean;
+import com.example.lanou3g.baidumusic.main.playsong.PlaySongFragment;
+import com.example.lanou3g.baidumusic.request.PlaySongGsonRequest;
+import com.example.lanou3g.baidumusic.main.playsong.PlayingSongListener;
+import com.example.lanou3g.baidumusic.main.service.PlaySongService;
+import com.example.lanou3g.baidumusic.bean.PlaySongListEvent;
+import com.example.lanou3g.baidumusic.main.songlist.ShowSongListListener;
+import com.example.lanou3g.baidumusic.main.songlist.SonglistFragment;
+import com.example.lanou3g.baidumusic.bean.PlayMusicTopEvent;
+import com.example.lanou3g.baidumusic.bean.PlaySongMenuEvent;
+import com.example.lanou3g.baidumusic.tools.DBtool;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.URLVlaues;
-import com.example.lanou3g.baidumusic.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.values.StringVlaues;
+import com.example.lanou3g.baidumusic.values.URLVlaues;
+import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.dynamic.DynamicFragment;
 import com.example.lanou3g.baidumusic.live.LiveFragment;
 import com.example.lanou3g.baidumusic.mine.MineFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.MusicLibraryFragment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -41,18 +54,19 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import cn.sharesdk.framework.ShareSDK;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private TabLayout tb;
     private ViewPager vp;
-    private RemoteViews mRemoteViews;
     public static PlaySongService.PlaySongBinder mBinder;
     private Intent mIntent;
     private PlaySongConnection mConnection;
     private ImageView mIv_play;
-    private NotificationManager mNotificationManager;
-    private Notification mNotification;
     private TextView mTv_songtitle;
     private TextView mTv_author;
     private ImageView mIv_next;
@@ -66,6 +80,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Boolean mIsPlaying = false;
     private PlaySongBean mPlaySongBean;
     private int item;
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+    private int playMode;
+    private PlaySongFragment mPlaySongFragment;
+    private Random mRandom = new Random();
+    private RelativeLayout mRl_top;
+    private FrameLayout mFl_main;
 
     @Override
     protected int setLayout() {
@@ -75,19 +96,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initView() {
         EventBus.getDefault().register(this);
-        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
-        mRemoteViews = new RemoteViews(getPackageName(), R.layout.layout_notification);
-        builder.setSmallIcon(R.mipmap.default_skin_thumbnail).
-                setContent(mRemoteViews).
-                setPriority(Notification.PRIORITY_HIGH).
-//                setOngoing(true).
-        setStyle(style);
-        style.setBuilder(builder);
-        mNotification = builder.build();
-        mNotification.bigContentView = mRemoteViews;
-        mNotificationManager.notify(StringVlaues.PLAY_NOTIFICATION, mNotification);
 
         tb = bindView(R.id.tb_main);
         vp = bindView(R.id.vp_main);
@@ -101,41 +109,48 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ViewGroup.LayoutParams params = mRl_play.getLayoutParams();
         params.height = MyApp.getWindowHeight() / 13;
         mRl_play.setLayoutParams(params);
+        mRl_top = bindView(R.id.rl_top);
+        mFl_main = bindView(R.id.fl_main);
     }
 
     @Override
     protected void initData() {
-//        SharedPreferences preferences = getSharedPreferences("welcome",MODE_PRIVATE);
-//        final SharedPreferences.Editor editor = preferences.edit();
-//        if (!preferences.getBoolean("one", true)){
-//            DBtool.getmDBtools().queryPlaySongEvent(new DBtool.QueryListener<PlaySongListEvent>() {
-//                @Override
-//                public void onQuert(List<PlaySongListEvent> list) {
-//                    item = list.get(list.size() - 1).getItem();
-//                    mMainSongListBeen.addAll(list.get(list.size() - 1).getSongListBeen());
-//                    PlaySongGsonRequest<PlaySongBean> gsonRequest =
-//                            new PlaySongGsonRequest<>(
-//                                    URLVlaues.getPlaySong(mMainSongListBeen.get(item).getSong_id()),
-//                                    PlaySongBean.class,
-//                                    new Response.Listener<PlaySongBean>() {
-//                                        @Override
-//                                        public void onResponse(PlaySongBean response) {
-//                                            mPlaySongBean = response;
-//                                            updatePlaySongInfo();
-//                                        }
-//                                    },
-//                                    new Response.ErrorListener() {
-//                                        @Override
-//                                        public void onErrorResponse(VolleyError error) {
-//
-//                                        }
-//                                    });
-//                    VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
-//                }
-//            });
-//        } else {
-//            editor.putBoolean("one", false);
-//        }
+        mPreferences = getSharedPreferences("welcome", MODE_PRIVATE);
+        mEditor = mPreferences.edit();
+        playMode = mPreferences.getInt(StringVlaues.playMode, StringVlaues.PLAY_MODE_ORDER);
+        item = mPreferences.getInt(StringVlaues.playItem, -2);
+        if (-2 != item) {
+            DBtool.getmDBtools().querySongList(new DBtool.QueryListener<MainSongListBean>() {
+                @Override
+                public void onQuert(List<MainSongListBean> list) {
+                    if (list == null || list.size() == 0) {
+
+                    } else {
+                        mMainSongListBeen.addAll(list);
+                        PlaySongGsonRequest<PlaySongBean> gsonRequest =
+                                new PlaySongGsonRequest<>(
+                                        URLVlaues.getPlaySong(mMainSongListBeen.get(item).getSong_id()),
+                                        PlaySongBean.class,
+                                        new Response.Listener<PlaySongBean>() {
+                                            @Override
+                                            public void onResponse(PlaySongBean response) {
+                                                mPlaySongBean = response;
+                                                updatePlaySongInfo();
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+
+                                            }
+                                        });
+                        VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
+                    }
+                }
+            });
+        }
+
+        ShareSDK.initSDK(this);
         ArrayList<String> strings = new ArrayList<>();
         strings.add(StringVlaues.FRAGMENT_MINE);
         strings.add(StringVlaues.FRAGMENT_MUSIC);
@@ -168,6 +183,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .Builder()
                 .showImageForEmptyUri(R.mipmap.default_skin_thumbnail)
                 .showImageOnLoading(R.mipmap.default_skin_thumbnail)
+                .imageScaleType(ImageScaleType.EXACTLY)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
@@ -204,12 +220,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 FragmentManager playSongManager = getSupportFragmentManager();
                 FragmentTransaction transaction = playSongManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.fragment_playsong_slide_in, R.anim.anim_null);
-                PlaySongFragment playSongFragment = new PlaySongFragment();
-                playSongFragment.setPlaying(mIsPlaying);
-                playSongFragment.setPlaySongBean(mPlaySongBean);
-                playSongFragment.setSongListBeen(mMainSongListBeen);
-                playSongFragment.setPlayingSongListener(mPlayingSongListener);
-                transaction.add(R.id.fl_all_main, playSongFragment);
+                if (mPlaySongFragment == null) {
+                    mPlaySongFragment = new PlaySongFragment();
+                }
+                mPlaySongFragment.setPlaying(mIsPlaying);
+                mPlaySongFragment.setPlaySongBean(mPlaySongBean);
+                mPlaySongFragment.setSongListBeen(mMainSongListBeen);
+                mPlaySongFragment.setPlayMode(playMode);
+                mPlaySongFragment.setPlayingSongListener(mPlayingSongListener);
+                transaction.add(R.id.fl_all_main, mPlaySongFragment);
                 transaction.commit();
                 break;
             default:
@@ -227,6 +246,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mBinder.playStart();
             }
         }
+
         @Override
         public void playingNext() {
             playNext();
@@ -241,6 +261,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         public void seekTo(int progress) {
             mBinder.playTo(progress);
         }
+
+        @Override
+        public void settingMode(int mode) {
+            playMode = mode;
+        }
     };
 
     ShowSongListListener mShowSongListListener = new ShowSongListListener() {
@@ -253,7 +278,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         public void playItem(int position) {
             item = position;
             playingSong();
-            updateLite();
         }
     };
 
@@ -279,23 +303,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void updatePlaySongInfo() {
         mTv_songtitle.setText(mPlaySongBean.getSonginfo().getTitle());
         mTv_author.setText(mPlaySongBean.getSonginfo().getAuthor());
-        mRemoteViews.setTextViewText(R.id.tv_title_notification, mPlaySongBean.getSonginfo().getTitle());
-        mRemoteViews.setTextViewText(R.id.tv_author_notification, mPlaySongBean.getSonginfo().getAuthor());
-        ImageLoader.getInstance().displayImage(
+        ImageLoader.getInstance().loadImage(
                 mPlaySongBean.getSonginfo().getPic_big(),
-                mIv_main,
                 mOptions,
                 new SimpleImageLoadingListener() {
 
                     @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-                        super.onLoadingCancelled(imageUri, view);
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        super.onLoadingFailed(imageUri, view, failReason);
+                        mIv_main.setImageResource(R.mipmap.default_skin_thumbnail);
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.default_skin_thumbnail);
+                        mBinder.updateNotificationImg(bitmap);
                     }
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        mRemoteViews.setImageViewBitmap(R.id.iv_notification, loadedImage);
+                        if (loadedImage != null) {
+                            mIv_main.setImageBitmap(loadedImage);
+                            mBinder.updateNotificationImg(loadedImage);
+                        } else {
+                            mIv_main.setImageResource(R.mipmap.default_skin_thumbnail);
+                            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.default_skin_thumbnail);
+                            mBinder.updateNotificationImg(bitmap);
+                        }
+
                     }
                 });
     }
@@ -312,24 +344,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public void playNext() {
         mBinder.playPause();
-        item++;
-        if (item >= mMainSongListBeen.size()) {
-            return;
-        } else {
-            playingSong();
-        }
-        updateLite();
+        updateItem();
+        playingSong();
+
     }
 
     public void playPrev() {
         mBinder.playPause();
-        item--;
-        if (item < 0) {
-            return;
-        } else {
-            playingSong();
+        updateItem();
+        playingSong();
+    }
+
+    public void updateItem() {
+        if (playMode == StringVlaues.PLAY_MODE_LOOP) {
+            if (item >= mMainSongListBeen.size() - 1) {
+                item = 0;
+            } else if (0 == item) {
+                item = mMainSongListBeen.size() - 1;
+            } else {
+                item++;
+            }
+        } else if (playMode == StringVlaues.PLAY_MODE_ORDER) {
+            if (item >= mMainSongListBeen.size() - 1 || 0 == item) {
+
+            } else {
+                item++;
+            }
+        } else if (playMode == StringVlaues.PLAY_MODE_RANDOM) {
+            item = mRandom.nextInt(mMainSongListBeen.size());
+        } else if (playMode == StringVlaues.PLAY_MODE_SINGLE_LOOP) {
+
         }
-        updateLite();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -337,12 +382,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         item = playSongListEvent.getItem();
         mMainSongListBeen.clear();
         mMainSongListBeen.addAll(playSongListEvent.getSongListBeen());
-        updateLite();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getPlaySongMenuEvent(PlaySongMenuEvent playSongMenuEvent) {
-        Log.d("MainActivity", "aa");
         item = playSongMenuEvent.getItem();
         mMainSongListBeen.clear();
         for (int i = 0; i < playSongMenuEvent.getContentBeen().size(); i++) {
@@ -353,12 +396,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mMainSongListBeen.add(songListBean);
         }
         playingSong();
-        updateLite();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getPlayMusicTopEvent(PlayMusicTopEvent playMusicTopEvent) {
-        Log.d("MainActivity", "bb");
         item = playMusicTopEvent.getItem();
         mMainSongListBeen.clear();
         for (int i = 0; i < playMusicTopEvent.getSongListBeen().size(); i++) {
@@ -369,29 +410,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mMainSongListBeen.add(songListBean);
         }
         playingSong();
-        updateLite();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void isPlaying(Boolean playing) {
         if (playing) {
             mIv_play.setImageResource(R.mipmap.bt_minibar_pause_normal);
-            mRemoteViews.setImageViewResource(R.id.iv_play_notification, R.mipmap.bt_notificationbar_pause);
-            mNotificationManager.notify(StringVlaues.PLAY_NOTIFICATION, mNotification);
             mIsPlaying = true;
         } else {
             mIv_play.setImageResource(R.mipmap.bt_minibar_play_normal);
-            mRemoteViews.setImageViewResource(R.id.iv_play_notification, R.mipmap.bt_notificationbar_play);
-            mNotificationManager.notify(StringVlaues.PLAY_NOTIFICATION, mNotification);
             mIsPlaying = false;
         }
-    }
-
-    public void updateLite(){
-//        PlaySongListEvent mPlaySongListEvent = new PlaySongListEvent();
-//        mPlaySongListEvent.setItem(item);
-//        mPlaySongListEvent.setSongListBeen(mMainSongListBeen);
-//        DBtool.getmDBtools().insertPlaySongEvent(mPlaySongListEvent);
     }
 
     public void playingSong() {
@@ -405,10 +434,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 try {
                                     if (response.getBitrate().getFile_link() != null) {
                                         mBinder.play(response);
+                                        mBinder.updateNotificationInfo();
                                         mPlaySongBean = response;
                                         updatePlaySongInfo();
                                         EventBus.getDefault().post(response);
-
                                     }
                                 } catch (Exception e) {
                                     playNext();
@@ -426,10 +455,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        Log.d("MainActivity", "zzz");
         EventBus.getDefault().unregister(this);
         unbindService(mConnection);
+        DBtool.getmDBtools().deleteSongList();
+        DBtool.getmDBtools().insertSongList(mMainSongListBeen);
+        Log.d("Sysout", "mMainSongListBeen.size():" + mMainSongListBeen.size());
+        mEditor.putInt(StringVlaues.playItem, item);
+        mEditor.putInt(StringVlaues.playMode, playMode);
+        mEditor.commit();
+        super.onDestroy();
     }
 
     class PlaySongConnection implements ServiceConnection {

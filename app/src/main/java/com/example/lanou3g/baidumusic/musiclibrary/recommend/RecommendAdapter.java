@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.main.ImageLoderSetting;
+import com.example.lanou3g.baidumusic.bean.RecommendBean;
+import com.example.lanou3g.baidumusic.tools.ImageLoderSetting;
+import com.example.lanou3g.baidumusic.values.RecommendVlaues;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.lang.ref.WeakReference;
@@ -122,6 +124,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 ViewHolderCarouse viewHolderCarouse = (ViewHolderCarouse) holder;
                 CarouseAdapter adapter = new CarouseAdapter(context);
                 adapter.setFocusResultBeen(lists.get(position));
+                vp.setPageMargin(20);
                 vp.setAdapter(adapter);
                 vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override

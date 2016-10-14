@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">百度音乐</string>
+
+    <string name="hello">Hello World, JPush!</string>
+    <string name="tag_hint">Tag为大小写字母，数字，下划线,中文， 多个用以逗号分隔</string>
+    <string name="alias_hint">Alias为大小写字母，数字，下划线</string>
+    <string name="style_hint">style为数字</string>
+    <string name="error_style_empty">style不能为空</string>
+    <string name="error_alias_empty">alias不能为空</string>
+    <string name="error_tag_empty">tag不能为空</string>
+    <string name="error_tag_gs_empty">格式不对</string>
+    <string name="error_network">网络连接异常,初始化失败 请检查网络！</string>
+    <string name="logining">程序在后台执行, 请查看日志！</string>
+    <string name="setting_su">设置成功</string>
+    <string name="lately_play">最近播放</string>
+    <string name="local_song">本地音乐"</string>
+    <string name="mine_download">我的下载"</string>
+    <string name="mine_found_songlist">自建歌单"</string>
+    <string name="my_like_song">我喜欢的音乐"</string>
 </resources>

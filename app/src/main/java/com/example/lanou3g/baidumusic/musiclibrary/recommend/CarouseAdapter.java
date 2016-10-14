@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
 
-import com.example.lanou3g.baidumusic.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.example.lanou3g.baidumusic.bean.RecommendBean;
+import com.example.lanou3g.baidumusic.tools.ImageLoderSetting;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -21,19 +21,10 @@ public class CarouseAdapter extends PagerAdapter {
     private ArrayList<ImageView> views;
     private List<RecommendBean.ResultBean.FocusBean.FocusResultBean> focusResultBeen;
     private Context context;
-    private final DisplayImageOptions options;
 
     public CarouseAdapter(Context context) {
         this.context = context;
         views = new ArrayList<>();
-        options = new DisplayImageOptions
-               .Builder()
-               .showImageForEmptyUri(R.mipmap.default_mv)
-               .showImageOnLoading(R.mipmap.default_mv)
-               .cacheInMemory(true)
-               .cacheOnDisk(true)
-               .considerExifParams(true)
-               .build();
     }
 
     public void setFocusResultBeen(List<RecommendBean.ResultBean.FocusBean.FocusResultBean> focusResultBeen) {
@@ -42,7 +33,7 @@ public class CarouseAdapter extends PagerAdapter {
 
         for (int i = 0; i < focusResultBeen.size(); i++) {
             ImageView view = new ImageView(context);
-            ImageLoader.getInstance().displayImage(focusResultBeen.get(i).getRandpic(), view, options);
+            ImageLoader.getInstance().displayImage(focusResultBeen.get(i).getRandpic(), view, ImageLoderSetting.getMvOptions());
             views.add(view);
         }
         notifyDataSetChanged();

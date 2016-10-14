@@ -12,7 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.main.ImageLoderSetting;
+import com.example.lanou3g.baidumusic.bean.MVBean;
+import com.example.lanou3g.baidumusic.tools.ImageLoderSetting;
 import com.example.lanou3g.baidumusic.musiclibrary.recommend.RefreshListenerCallBack;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

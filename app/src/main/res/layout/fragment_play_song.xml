@@ -19,8 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:src="@mipmap/bt_list_order_normal"/>
+            android:layout_weight="1"/>
 
         <ImageView
             android:id="@+id/iv_playsong_prev"
@@ -113,6 +112,7 @@
             android:src="@mipmap/ic_listmore_download_normal"/>
 
         <ImageView
+            android:id="@+id/iv_playsong_share"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

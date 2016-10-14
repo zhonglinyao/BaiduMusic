@@ -9,13 +9,15 @@ import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.lanou3g.baidumusic.GsonRequest;
-import com.example.lanou3g.baidumusic.MyApp;
+import com.example.lanou3g.baidumusic.bean.MusicTopBean;
+import com.example.lanou3g.baidumusic.bean.MusicTopSongListBean;
+import com.example.lanou3g.baidumusic.bean.PlayMusicTopEvent;
+import com.example.lanou3g.baidumusic.request.GsonRequest;
+import com.example.lanou3g.baidumusic.main.MyApp;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.URLVlaues;
-import com.example.lanou3g.baidumusic.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.values.URLVlaues;
+import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
-import com.example.lanou3g.baidumusic.main.PlayMusicTopEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -99,7 +101,7 @@ public class MusicTopFragment extends BaseFragment{
                         mMusicTopSongListFragment = new MusicTopSongListFragment();
                     }
                     mMusicTopSongListFragment.setMusicTopSongListBean(mMusicTopSongListBean);
-                    transaction.setCustomAnimations(R.anim.fragment_slide_in_right, R.anim.anim_null);
+                    transaction.setCustomAnimations(R.anim.fragment_slide_in_right, R.anim.fragment_slide_out_left);
                     transaction.add(R.id.fl_main, mMusicTopSongListFragment);
                     transaction.commit();
                 } else {
