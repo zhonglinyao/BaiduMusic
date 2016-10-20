@@ -15,6 +15,15 @@ public class MainSongListBean implements Serializable{
     private String title;
     private String author;
     private String song_id;
+    private Boolean isLocal = false;
+
+    public Boolean getLocal() {
+        return isLocal;
+    }
+
+    public void setLocal(Boolean local) {
+        isLocal = local;
+    }
 
     public int getId() {
         return id;

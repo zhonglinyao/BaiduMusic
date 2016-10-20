@@ -16,33 +16,32 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.lanou3g.baidumusic.bean.MainSongListBean;
-import com.example.lanou3g.baidumusic.bean.PlaySongBean;
-import com.example.lanou3g.baidumusic.main.playsong.PlaySongFragment;
-import com.example.lanou3g.baidumusic.request.PlaySongGsonRequest;
-import com.example.lanou3g.baidumusic.main.playsong.PlayingSongListener;
-import com.example.lanou3g.baidumusic.main.service.PlaySongService;
-import com.example.lanou3g.baidumusic.bean.PlaySongListEvent;
-import com.example.lanou3g.baidumusic.main.songlist.ShowSongListListener;
-import com.example.lanou3g.baidumusic.main.songlist.SonglistFragment;
-import com.example.lanou3g.baidumusic.bean.PlayMusicTopEvent;
-import com.example.lanou3g.baidumusic.bean.PlaySongMenuEvent;
-import com.example.lanou3g.baidumusic.tools.DBtool;
 import com.example.lanou3g.baidumusic.R;
-import com.example.lanou3g.baidumusic.values.StringVlaues;
-import com.example.lanou3g.baidumusic.values.URLVlaues;
-import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.bean.MainSongListBean;
+import com.example.lanou3g.baidumusic.bean.PlayMusicTopEvent;
+import com.example.lanou3g.baidumusic.bean.PlaySongBean;
+import com.example.lanou3g.baidumusic.bean.PlaySongListEvent;
+import com.example.lanou3g.baidumusic.bean.PlaySongMenuEvent;
 import com.example.lanou3g.baidumusic.dynamic.DynamicFragment;
 import com.example.lanou3g.baidumusic.live.LiveFragment;
+import com.example.lanou3g.baidumusic.main.playsong.PlaySongFragment;
+import com.example.lanou3g.baidumusic.main.playsong.PlayingSongListener;
+import com.example.lanou3g.baidumusic.main.service.PlaySongService;
+import com.example.lanou3g.baidumusic.main.songlist.ShowSongListListener;
+import com.example.lanou3g.baidumusic.main.songlist.SonglistFragment;
 import com.example.lanou3g.baidumusic.mine.MineFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.MusicLibraryFragment;
+import com.example.lanou3g.baidumusic.request.PlaySongGsonRequest;
+import com.example.lanou3g.baidumusic.tools.DBtool;
+import com.example.lanou3g.baidumusic.request.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.values.StringVlaues;
+import com.example.lanou3g.baidumusic.values.URLVlaues;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -63,7 +62,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private TabLayout tb;
     private ViewPager vp;
-    public static PlaySongService.PlaySongBinder mBinder;
+    private PlaySongService.PlaySongBinder mBinder;
     private Intent mIntent;
     private PlaySongConnection mConnection;
     private ImageView mIv_play;
@@ -85,8 +84,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private int playMode;
     private PlaySongFragment mPlaySongFragment;
     private Random mRandom = new Random();
-    private RelativeLayout mRl_top;
-    private FrameLayout mFl_main;
+    private Boolean firstStart;
+//    private Boolean isLocal;
+//    private ArrayList<LocalMusicBean> mLocalMusicBeen = new ArrayList<>();
 
     @Override
     protected int setLayout() {
@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initView() {
+
         EventBus.getDefault().register(this);
 
         tb = bindView(R.id.tb_main);
@@ -109,14 +110,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ViewGroup.LayoutParams params = mRl_play.getLayoutParams();
         params.height = MyApp.getWindowHeight() / 13;
         mRl_play.setLayoutParams(params);
-        mRl_top = bindView(R.id.rl_top);
-        mFl_main = bindView(R.id.fl_main);
     }
 
     @Override
     protected void initData() {
         mPreferences = getSharedPreferences("welcome", MODE_PRIVATE);
         mEditor = mPreferences.edit();
+//        isLocal = mPreferences.getBoolean("isLocal", true);
+        firstStart = mPreferences.getBoolean("firststart", true);
         playMode = mPreferences.getInt(StringVlaues.playMode, StringVlaues.PLAY_MODE_ORDER);
         item = mPreferences.getInt(StringVlaues.playItem, -2);
         if (-2 != item) {
@@ -124,7 +125,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 @Override
                 public void onQuert(List<MainSongListBean> list) {
                     if (list == null || list.size() == 0) {
-
+//                        item = 0;
+//                        isLocal = true;
+//                        mLocalMusicBeen.clear();
+//                        mLocalMusicBeen.addAll(Tools.localMusicLoader(getContentResolver()));
+//                        for (int i = 0; i < mLocalMusicBeen.size(); i++) {
+//                            MainSongListBean mainSongListBean = new MainSongListBean();
+//                            mainSongListBean.setTitle(mLocalMusicBeen.get(i).getTitle());
+//                            mainSongListBean.setAuthor(mLocalMusicBeen.get(i).getArtist());
+//                            mainSongListBean.setSong_id(mLocalMusicBeen.get(i).getUrl());
+//                            mMainSongListBeen.add(mainSongListBean);
+//                        }
+//                        Log.d("MainActivity", "mMainSongListBeen.size():" + mMainSongListBeen.size());
+//                        updatePlaySongInfo();
                     } else {
                         mMainSongListBeen.addAll(list);
                         PlaySongGsonRequest<PlaySongBean> gsonRequest =
@@ -136,6 +149,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                             public void onResponse(PlaySongBean response) {
                                                 mPlaySongBean = response;
                                                 updatePlaySongInfo();
+                                                mBinder.updateNotificationInfo(response);
                                             }
                                         },
                                         new Response.ErrorListener() {
@@ -146,8 +160,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                         });
                         VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
                     }
+
                 }
             });
+        } else {
+
+//            Log.d("MainActivity", "22");
+//            item = 0;
+//            for (int i = 0; i < mLocalMusicBeen.size(); i++) {
+//                MainSongListBean mainSongListBean = new MainSongListBean();
+//                mainSongListBean.setTitle(mLocalMusicBeen.get(i).getTitle());
+//                mainSongListBean.setAuthor(mLocalMusicBeen.get(i).getArtist());
+//                mainSongListBean.setSong_id(mLocalMusicBeen.get(i).getUrl());
+//                mMainSongListBeen.add(mainSongListBean);
+//            }
+//            updatePlaySongInfo();
         }
 
         ShareSDK.initSDK(this);
@@ -194,13 +221,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_play_main:
-                if (mIsPlaying) {
-                    if (mPlaySongBean != null) {
+                if (mMainSongListBeen.size() > 0 && mMainSongListBeen != null && mMainSongListBeen.get(0).getSong_id() != null) {
+                    if (mIsPlaying) {
                         mBinder.playPause();
-                    }
-                } else {
-                    if (mPlaySongBean != null) {
-                        mBinder.playStart();
+                    } else {
+                        if (firstStart) {
+                            firstStart = false;
+//                            if (isLocal) {
+//                                playingLocalSong();
+//                            } else {
+                            playingSong();
+//                            }
+                        } else {
+                            mBinder.playStart();
+                        }
                     }
                 }
                 break;
@@ -219,7 +253,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.rl_playing:
                 FragmentManager playSongManager = getSupportFragmentManager();
                 FragmentTransaction transaction = playSongManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.fragment_playsong_slide_in, R.anim.anim_null);
+                transaction.setCustomAnimations(R.anim.fragment_playsong_slide_in, R.anim.fragment_songlist_slide_out);
                 if (mPlaySongFragment == null) {
                     mPlaySongFragment = new PlaySongFragment();
                 }
@@ -228,8 +262,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mPlaySongFragment.setSongListBeen(mMainSongListBeen);
                 mPlaySongFragment.setPlayMode(playMode);
                 mPlaySongFragment.setPlayingSongListener(mPlayingSongListener);
-                transaction.add(R.id.fl_all_main, mPlaySongFragment);
-                transaction.commit();
+                transaction.add(R.id.fl_all_main, mPlaySongFragment).commit();
                 break;
             default:
                 break;
@@ -239,7 +272,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     PlayingSongListener mPlayingSongListener = new PlayingSongListener() {
         @Override
         public void isPlay(Boolean isPlaying) {
-            mBinder.playPause();
             if (isPlaying) {
                 mBinder.playPause();
             } else {
@@ -301,35 +333,43 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void updatePlaySongInfo() {
-        mTv_songtitle.setText(mPlaySongBean.getSonginfo().getTitle());
-        mTv_author.setText(mPlaySongBean.getSonginfo().getAuthor());
-        ImageLoader.getInstance().loadImage(
-                mPlaySongBean.getSonginfo().getPic_big(),
-                mOptions,
-                new SimpleImageLoadingListener() {
+        if (mPlaySongBean.getSonginfo().getPic_big() == null) {
+            mTv_songtitle.setText(mMainSongListBeen.get(item).getTitle());
+            mTv_author.setText(mMainSongListBeen.get(item).getAuthor());
+            mIv_main.setImageResource(R.mipmap.default_skin_thumbnail);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.default_skin_thumbnail);
+            mBinder.updateNotificationImg(bitmap);
+        } else {
+            mTv_songtitle.setText(mPlaySongBean.getSonginfo().getTitle());
+            mTv_author.setText(mPlaySongBean.getSonginfo().getAuthor());
+            ImageLoader.getInstance().loadImage(
+                    mPlaySongBean.getSonginfo().getPic_big(),
+                    mOptions,
+                    new SimpleImageLoadingListener() {
 
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                        super.onLoadingFailed(imageUri, view, failReason);
-                        mIv_main.setImageResource(R.mipmap.default_skin_thumbnail);
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.default_skin_thumbnail);
-                        mBinder.updateNotificationImg(bitmap);
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                        super.onLoadingComplete(imageUri, view, loadedImage);
-                        if (loadedImage != null) {
-                            mIv_main.setImageBitmap(loadedImage);
-                            mBinder.updateNotificationImg(loadedImage);
-                        } else {
+                        @Override
+                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                            super.onLoadingFailed(imageUri, view, failReason);
                             mIv_main.setImageResource(R.mipmap.default_skin_thumbnail);
                             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.default_skin_thumbnail);
                             mBinder.updateNotificationImg(bitmap);
                         }
 
-                    }
-                });
+                        @Override
+                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                            super.onLoadingComplete(imageUri, view, loadedImage);
+                            if (loadedImage != null) {
+                                mIv_main.setImageBitmap(loadedImage);
+                                mBinder.updateNotificationImg(loadedImage);
+                            } else {
+                                mIv_main.setImageResource(R.mipmap.default_skin_thumbnail);
+                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.default_skin_thumbnail);
+                                mBinder.updateNotificationImg(bitmap);
+                            }
+
+                        }
+                    });
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -346,7 +386,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mBinder.playPause();
         updateItem();
         playingSong();
-
     }
 
     public void playPrev() {
@@ -382,6 +421,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         item = playSongListEvent.getItem();
         mMainSongListBeen.clear();
         mMainSongListBeen.addAll(playSongListEvent.getSongListBeen());
+        if (!playSongListEvent.getDelete()) {
+            playingSong();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -423,34 +465,47 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+//    public void playingLocalSong() {
+//        mBinder.playLocal(mMainSongListBeen.get(item).getSong_id());
+//        updatePlaySongInfo();
+//    }
+
     public void playingSong() {
-        PlaySongGsonRequest<PlaySongBean> playSongGsonRequest =
-                new PlaySongGsonRequest<>(
-                        URLVlaues.getPlaySong(mMainSongListBeen.get(item).getSong_id()),
-                        PlaySongBean.class,
-                        new Response.Listener<PlaySongBean>() {
-                            @Override
-                            public void onResponse(PlaySongBean response) {
-                                try {
-                                    if (response.getBitrate().getFile_link() != null) {
+        if (!mMainSongListBeen.get(item).getLocal()) {
+            PlaySongGsonRequest<PlaySongBean> playSongGsonRequest =
+                    new PlaySongGsonRequest<>(
+                            URLVlaues.getPlaySong(mMainSongListBeen.get(item).getSong_id()),
+                            PlaySongBean.class,
+                            new Response.Listener<PlaySongBean>() {
+                                @Override
+                                public void onResponse(PlaySongBean response) {
+                                    if (response != null && response.getBitrate() != null
+                                            && response.getBitrate().getFile_link() != null) {
                                         mBinder.play(response);
-                                        mBinder.updateNotificationInfo();
                                         mPlaySongBean = response;
                                         updatePlaySongInfo();
                                         EventBus.getDefault().post(response);
+                                    } else {
+                                        playNext();
                                     }
-                                } catch (Exception e) {
-                                    playNext();
                                 }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                mBinder.playPause();
-                            }
-                        });
-        VolleyRequestQueue.getVolleyRequestQueue().addRequest(playSongGsonRequest);
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            });
+            VolleyRequestQueue.getVolleyRequestQueue().addRequest(playSongGsonRequest);
+        } else {
+            mPlaySongBean.getSonginfo().setTitle(mMainSongListBeen.get(item).getTitle());
+            mPlaySongBean.getSonginfo().setAuthor(mMainSongListBeen.get(item).getAuthor());
+            mPlaySongBean.getSonginfo().setPic_big(null);
+            mPlaySongBean.getSonginfo().setSong_id(null);
+            mBinder.playLocal(mMainSongListBeen.get(item));
+            mBinder.updateNotificationInfo(mPlaySongBean);
+            updatePlaySongInfo();
+        }
     }
 
     @Override
@@ -462,6 +517,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Log.d("Sysout", "mMainSongListBeen.size():" + mMainSongListBeen.size());
         mEditor.putInt(StringVlaues.playItem, item);
         mEditor.putInt(StringVlaues.playMode, playMode);
+        mEditor.putBoolean("firststart", true);
+//        mEditor.putBoolean("isLocal", isLocal);
         mEditor.commit();
         super.onDestroy();
     }

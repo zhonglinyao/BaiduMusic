@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.bean.MusicTopSongListBean;
 import com.example.lanou3g.baidumusic.bean.PlayMusicTopEvent;
-import com.example.lanou3g.baidumusic.tools.DividerItemDecoration;
-import com.example.lanou3g.baidumusic.main.MyApp;
-import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
+import com.example.lanou3g.baidumusic.main.MyApp;
+import com.example.lanou3g.baidumusic.tools.DividerItemDecoration;
 import com.example.lanou3g.baidumusic.tools.ImageLoderSetting;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -76,7 +76,6 @@ public class MusicTopSongListFragment extends BaseFragment {
                 transaction.commit();
             }
         });
-
         ViewGroup.LayoutParams params = mImg.getLayoutParams();
         params.width = MyApp.getWindowWidth();
         params.height = MyApp.getWindowHeight() / 4;
@@ -132,6 +131,7 @@ public class MusicTopSongListFragment extends BaseFragment {
             }
         });
     }
+
 
     @Override
     public void onDestroyView() {

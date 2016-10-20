@@ -17,6 +17,7 @@
             android:src="@mipmap/ic_mymusic_picture"/>
 
         <RelativeLayout
+            android:id="@+id/rl_login_mine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
@@ -83,13 +84,12 @@
             <TextView
                 android:id="@+id/tv_local_song_count"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="152"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_songlist_play"/>
@@ -133,8 +133,7 @@
             <TextView
                 android:id="@+id/tv_lately_play_count"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="152"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <ImageView
@@ -184,8 +183,7 @@
             <TextView
                 android:id="@+id/tv_downLoad_count"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="152"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <ImageView

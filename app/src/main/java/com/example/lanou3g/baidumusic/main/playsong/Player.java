@@ -2,8 +2,8 @@ package com.example.lanou3g.baidumusic.main.playsong;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.util.Log;
 
+import com.example.lanou3g.baidumusic.bean.MainSongListBean;
 import com.example.lanou3g.baidumusic.bean.PlaySongBean;
 import com.example.lanou3g.baidumusic.bean.SongTimeEvent;
 import com.example.lanou3g.baidumusic.tools.ThreadTool;
@@ -54,6 +54,17 @@ public class Player implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErr
         try {
             mMediaPlayer.reset();
             mMediaPlayer.setDataSource(playSongBean.getBitrate().getFile_link());
+            mMediaPlayer.prepareAsync();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playLocal(MainSongListBean mainSongListBean){
+        mPlaySongBean = null;
+        try {
+            mMediaPlayer.reset();
+            mMediaPlayer.setDataSource(mainSongListBean.getSong_id());
             mMediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
@@ -122,8 +133,6 @@ public class Player implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErr
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        Log.d("Player", "qq");
-        playPause();
         EventBus.getDefault().post(StringVlaues.PLAY_NEXT);
     }
 }

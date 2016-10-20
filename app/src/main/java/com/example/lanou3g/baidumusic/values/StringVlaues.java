@@ -19,4 +19,5 @@ public class StringVlaues {
 
     public final static String playMode = "playMode";
     public final static String playItem = "item";
+    public final static String downloadPath = "/sdcard/AAAAAAAA";
 }

@@ -37,4 +37,5 @@ public class WelcomeFirstFragment extends BaseFragment{
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.welcome_5820_1, options);
         mLl.setBackground(new BitmapDrawable(getResources(), bitmap));
     }
+
 }

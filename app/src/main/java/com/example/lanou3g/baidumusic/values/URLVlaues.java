@@ -58,9 +58,7 @@ public class URLVlaues {
     }
 
     public static String getPlaySong(String song_id) {
-        PLAY_SONG = "";
-        PLAY_SONG = PLAY_SONG_HEAD + song_id + PLAY_SONG_END;
-        return PLAY_SONG;
+        return PLAY_SONG_HEAD + song_id + PLAY_SONG_END;
     }
 
     public static String getHotSongMenu(String s) {

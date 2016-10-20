@@ -61,7 +61,6 @@ public class FragmentPlaySongSecond extends BaseFragment {
         mIv_background.setBackgroundColor(Color.BLACK);
         update();
     }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getPlaySongInfo(PlaySongBean playSongBean) {
         mPlaySongBean = playSongBean;
@@ -70,7 +69,7 @@ public class FragmentPlaySongSecond extends BaseFragment {
 
     public void update() {
         if (mPlaySongBean != null && mPlaySongBean.getSonginfo() != null) {
-            if (mPlaySongBean.getSonginfo().getPic_huge() != null) {
+            if (mPlaySongBean.getSonginfo().getPic_big() != null) {
                 ImageLoader.getInstance().loadImage(mPlaySongBean.getSonginfo().getPic_big(), ImageLoderSetting.getOptions(), new SimpleImageLoadingListener() {
 
                     @Override

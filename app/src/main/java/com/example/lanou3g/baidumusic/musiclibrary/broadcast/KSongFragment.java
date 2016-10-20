@@ -21,4 +21,5 @@ public class KSongFragment extends BaseFragment{
     protected void initData() {
 
     }
+
 }

@@ -36,4 +36,5 @@ public class SongSortFragment extends BaseFragment{
     protected void initData() {
 
     }
+
 }

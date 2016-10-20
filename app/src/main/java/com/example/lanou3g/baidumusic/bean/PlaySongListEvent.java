@@ -1,7 +1,5 @@
 package com.example.lanou3g.baidumusic.bean;
 
-import com.example.lanou3g.baidumusic.bean.MainSongListBean;
-
 import java.util.List;
 
 /**
@@ -10,6 +8,15 @@ import java.util.List;
 public class PlaySongListEvent {
     private int item;
     private List<MainSongListBean> mSongListBeen;
+    private Boolean isDelete = false;
+
+    public Boolean getDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(Boolean delete) {
+        isDelete = delete;
+    }
 
     public int getItem() {
         return item;

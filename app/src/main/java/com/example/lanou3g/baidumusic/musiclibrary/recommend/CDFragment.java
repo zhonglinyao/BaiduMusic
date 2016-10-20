@@ -21,4 +21,5 @@ public class CDFragment extends BaseFragment{
     protected void initData() {
 
     }
+
 }

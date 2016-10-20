@@ -16,7 +16,7 @@ import com.example.lanou3g.baidumusic.request.GsonRequest;
 import com.example.lanou3g.baidumusic.main.MyApp;
 import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.values.URLVlaues;
-import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.request.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -118,7 +118,7 @@ public class MusicTopFragment extends BaseFragment{
                                                 mMusicTopSongListFragment = new MusicTopSongListFragment();
                                             }
                                             mMusicTopSongListFragment.setMusicTopSongListBean(mMusicTopSongListBean);
-                                            transaction.setCustomAnimations(R.anim.fragment_songlist_slide_in, R.anim.anim_null);
+                                            transaction.setCustomAnimations(R.anim.fragment_slide_in_right, R.anim.fragment_slide_out_left);
                                             transaction.add(R.id.fl_main, mMusicTopSongListFragment);
                                             transaction.commit();
                                         }
@@ -151,6 +151,7 @@ public class MusicTopFragment extends BaseFragment{
                 });
         VolleyRequestQueue.getVolleyRequestQueue().addRequest(gsonRequest);
     }
+
 
     @Override
     public void onDestroyView() {

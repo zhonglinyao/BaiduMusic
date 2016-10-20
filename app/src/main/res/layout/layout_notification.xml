@@ -63,23 +63,23 @@
 
                 <ImageView
                     android:id="@+id/iv_prev_notification"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/bt_notificationbar_prev" />
 
                 <ImageView
                     android:id="@+id/iv_play_notification"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:src="@mipmap/bt_notificationbar_play" />
 
                 <ImageView
                     android:id="@+id/iv_next_notification"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/bt_notificationbar_next"/>
             </LinearLayout>

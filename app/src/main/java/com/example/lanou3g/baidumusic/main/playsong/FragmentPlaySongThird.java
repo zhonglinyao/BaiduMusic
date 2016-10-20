@@ -7,7 +7,7 @@ import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.bean.PlaySongBean;
 import com.example.lanou3g.baidumusic.bean.SongTimeEvent;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
-import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.request.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.lrc.view.ILrcBuilder;
 import com.example.lanou3g.baidumusic.main.lrc.view.ILrcViewListener;
 import com.example.lanou3g.baidumusic.main.lrc.view.impl.DefaultLrcBuilder;
@@ -66,7 +66,6 @@ public class FragmentPlaySongThird extends BaseFragment {
             }
         });
     }
-
     private void lrcUpdate(){
         StringRequest stringRequest = new StringRequest(mPlaySongBean.getSonginfo().getLrclink(),
                 new Response.Listener<String>() {

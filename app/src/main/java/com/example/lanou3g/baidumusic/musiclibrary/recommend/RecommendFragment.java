@@ -17,7 +17,7 @@ import com.example.lanou3g.baidumusic.musiclibrary.recommend.songsort.SongSortFr
 import com.example.lanou3g.baidumusic.request.GsonRequest;
 import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.values.URLVlaues;
-import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.request.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.MusicLibraryFragment;
 import com.example.lanou3g.baidumusic.bean.HotSongMenuBean;
@@ -164,6 +164,7 @@ public class RecommendFragment extends BaseFragment {
 
         VolleyRequestQueue.getVolleyRequestQueue().addRequest(request);
     }
+
 
 
     @Override

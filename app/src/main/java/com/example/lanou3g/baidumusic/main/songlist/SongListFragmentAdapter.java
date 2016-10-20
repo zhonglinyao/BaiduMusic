@@ -77,7 +77,7 @@ public class SongListFragmentAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (mPlaySongBean != null) {
+        if (mPlaySongBean != null && mPlaySongBean.getSonginfo().getSong_id() != null) {
             if (mPlaySongBean.getSonginfo().getSong_id().equals(mSongListBeen.get(position).getSong_id())) {
                 viewHolder.mTv_title.setTextColor(mContext.getResources().getColor(R.color.colorMain));
                 viewHolder.mTv_author.setTextColor(mContext.getResources().getColor(R.color.colorMain));
@@ -108,6 +108,7 @@ public class SongListFragmentAdapter extends BaseAdapter {
                 mPlaySongListEvent.setItem(i);
             }
         }
+        mPlaySongListEvent.setDelete(true);
         mPlaySongListEvent.setSongListBeen(mSongListBeen);
         EventBus.getDefault().post(mPlaySongListEvent);
     }

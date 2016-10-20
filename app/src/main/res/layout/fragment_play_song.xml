@@ -106,6 +106,7 @@
             android:src="@mipmap/ic_listmore_love_normal"/>
 
         <ImageView
+            android:id="@+id/iv_playsong_download"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -132,12 +133,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/ll_share_play">
+        android:layout_above="@id/ll_share_play"
+        android:background="@android:color/white">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_playsong"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@android:color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -13,8 +13,10 @@
     <string name="logining">程序在后台执行, 请查看日志！</string>
     <string name="setting_su">设置成功</string>
     <string name="lately_play">最近播放</string>
-    <string name="local_song">本地音乐"</string>
-    <string name="mine_download">我的下载"</string>
-    <string name="mine_found_songlist">自建歌单"</string>
-    <string name="my_like_song">我喜欢的音乐"</string>
+    <string name="local_song">本地音乐</string>
+    <string name="mine_download">我的下载</string>
+    <string name="mine_found_songlist">自建歌单</string>
+    <string name="my_like_song">我喜欢的音乐</string>
+    <string name="mine_login">百度账号登录</string>
+    <string name="mine_sure">确定</string>
 </resources>

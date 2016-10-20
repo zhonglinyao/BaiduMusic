@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:src="#90505050"/>
+            android:src="#90505050"
+            android:background="@android:color/black"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -35,7 +36,8 @@
         <ImageView
             android:id="@+id/iv_playsong_second_src"
             android:layout_width="250dp"
-            android:layout_height="250dp"/>
+            android:layout_height="250dp"
+            android:src="@mipmap/img_minibar_default"/>
 
         <LinearLayout
             android:id="@+id/ll_playsong_second_singer"

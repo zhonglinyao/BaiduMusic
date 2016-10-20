@@ -16,7 +16,7 @@ import com.example.lanou3g.baidumusic.bean.SongMenuBean;
 import com.example.lanou3g.baidumusic.request.GsonRequest;
 import com.example.lanou3g.baidumusic.R;
 import com.example.lanou3g.baidumusic.values.URLVlaues;
-import com.example.lanou3g.baidumusic.tools.VolleyRequestQueue;
+import com.example.lanou3g.baidumusic.request.VolleyRequestQueue;
 import com.example.lanou3g.baidumusic.main.BaseFragment;
 import com.example.lanou3g.baidumusic.musiclibrary.recommend.SongMenuListener;
 
@@ -177,6 +177,7 @@ public class SongMenuFragment extends BaseFragment {
             }
         });
     }
+
 
 
     @Override

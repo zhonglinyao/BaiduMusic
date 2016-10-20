@@ -164,6 +164,7 @@ public class HotSongMenuFragment extends BaseFragment {
         });
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();

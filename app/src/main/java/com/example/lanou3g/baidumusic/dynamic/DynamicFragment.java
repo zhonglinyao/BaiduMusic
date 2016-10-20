@@ -21,4 +21,5 @@ public class DynamicFragment extends BaseFragment{
     protected void initData() {
 
     }
+
 }

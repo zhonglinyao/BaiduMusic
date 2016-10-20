@@ -21,4 +21,5 @@ public class LiveFragment extends BaseFragment {
     protected void initData() {
 
     }
+
 }

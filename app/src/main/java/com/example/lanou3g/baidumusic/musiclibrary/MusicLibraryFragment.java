@@ -56,4 +56,5 @@ public class MusicLibraryFragment extends BaseFragment{
         tb.setSelectedTabIndicatorColor(Color.argb(255, 0, 200, 255));
         tb.setTabTextColors(Color.argb(150,0,0,0), Color.argb(255,0, 200 , 255));
     }
+
 }

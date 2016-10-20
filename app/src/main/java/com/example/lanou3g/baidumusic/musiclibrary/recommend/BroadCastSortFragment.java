@@ -21,4 +21,5 @@ public class BroadCastSortFragment extends BaseFragment {
     protected void initData() {
 
     }
+
 }
