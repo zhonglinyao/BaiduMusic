@@ -109,7 +109,7 @@ public class HotSongMenuFragment extends BaseFragment {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         super.onLoadingComplete(imageUri, view, loadedImage);
-                        Bitmap bitmap = Tools.changeBackgroundImage(loadedImage, 22.0f);
+                        Bitmap bitmap = Tools.changackgroundImage(loadedImage, 22.0f);
                         if (bitmap != null) {
                             Drawable drawable = new BitmapDrawable(getResources(), bitmap);
                             cl.setBackground(drawable);
